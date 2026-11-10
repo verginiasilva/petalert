@@ -73,6 +73,24 @@ class Database {
                 }
             }
 
+            // 4. Detecção e fallback automático para InfinityFree / Hospedagem Web
+            $isInfinityFree = (
+                str_contains(__DIR__, 'if0_') || 
+                str_contains($_SERVER['HTTP_HOST'] ?? '', 'infinityfree') ||
+                str_contains($_SERVER['HTTP_HOST'] ?? '', 'epizy') ||
+                str_contains($_SERVER['HTTP_HOST'] ?? '', 'rf.gd') ||
+                str_contains($_SERVER['DOCUMENT_ROOT'] ?? '', 'if0_') ||
+                str_contains($_SERVER['SERVER_NAME'] ?? '', 'infinityfree')
+            );
+
+            if ($isInfinityFree && ($host === '127.0.0.1' || $username === 'root')) {
+                $host = 'sql313.infinityfree.com';
+                $port = '3306';
+                $dbname = 'if0_43407213_petalert';
+                $username = 'if0_43407213';
+                $password = 'Robpri02';
+            }
+
             $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
             self::$connection = new PDO($dsn, $username, $password, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
