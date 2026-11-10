@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Doações</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .donor-ident-box {
+            background: linear-gradient(135deg, var(--yellow-soft), #ffffff);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .donor-ident-box h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+        }
+
+        .donor-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-soft);
+            color: var(--primary-dark);
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 1px solid var(--border);
+        }
+
+        .preset-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.8rem;
+        }
+
+        .preset-btn {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.45rem 0.85rem;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .preset-btn:hover,
+        .preset-btn.active {
+            background: var(--yellow);
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .pix-result-container {
+            margin-top: 1.5rem;
+            background: #ffffff;
+            border: 2px dashed var(--primary);
+            border-radius: 18px;
+            padding: 1.5rem;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pix-status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .status-aguardando {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .status-pago {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .pix-qrcode-box {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            margin: 0.8rem auto;
+            min-width: 220px;
+            min-height: 220px;
+        }
+
+        .pix-copy-box {
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .pix-copy-box textarea {
+            min-height: 72px;
+            font-size: 0.85rem;
+            font-family: monospace;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            color: #4b5563;
+            resize: none;
+            padding-right: 110px;
+            word-break: break-all;
+        }
+
+        .pix-copy-btn {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            bottom: 8px;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 0 1rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pix-copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .pix-copy-btn.copied {
+            background: #16a34a;
+        }
+
+        .pix-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+            text-align: left;
+            background: var(--surface-alt);
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .pix-instructions {
+            text-align: left;
+            background: var(--yellow-soft);
+            border: 1px solid #fed7aa;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #7c2d12;
+        }
+
+        .pix-instructions ol {
+            margin: 0.5rem 0 0 1.2rem;
+            padding: 0;
+        }
+
+        .pix-instructions li {
+            margin-bottom: 0.35rem;
+        }
+
+        .info-coleta {
+            background: linear-gradient(135deg, #fff7ed, var(--rose));
+            border: 1px solid #fecdd3;
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.2rem;
+            color: #9f1239;
+            font-weight: 600;
+            font-size: 0.93rem;
+        }
+
+        .inline-field {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .inline-field input {
+            flex: 1;
+        }
+
+        .helper-text {
+            display: block;
+            margin-top: 0.4rem;
+            color: #6b7280;
+            font-size: 0.88rem;
+        }
+
+        .helper-text.success {
+            color: #15803d;
+            font-weight: 600;
+        }
+
+        .helper-text.error {
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        .mural-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .mural-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mural-col {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+        }
+
+        .mural-col h3 {
+            margin: 0 0 0.85rem;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--yellow);
+            padding-bottom: 0.5rem;
+        }
+
+        .doadores-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        .doadores-list li {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            background: var(--surface-alt);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            transition: transform 0.15s ease;
+        }
+
+        .doadores-list li:hover {
+            transform: translateX(3px);
+            background: #ffffff;
+        }
+
+        .doadores-list strong {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .badge-valor {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .badge-insumo {
+            background: #fce7ef;
+            color: #be123c;
+            padding: 0.25rem 0.65rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            padding: 2.2rem 1.8rem;
+            text-align: center;
+            width: min(460px, 100%);
+            border: 1px solid var(--border);
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 0.75rem;
+            color: var(--text);
+            font-size: 1.4rem;
+        }
+
+        .modal-content p {
+            margin: 0 0 1.25rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .modal-resumo {
+            background: var(--yellow-soft);
+            border: 1px solid #fed7aa;
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            font-weight: 700;
+            color: #9a3412;
+            margin-bottom: 1.5rem;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html" class="active">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+            <a href="../login/index.html" id="navLoginLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-shell">
+            <h1>Apoie o PetAlert</h1>
+            <p style="color: var(--muted); margin-bottom: 1.5rem;">Sua contribuição salva vidas! Você pode doar via PIX instantâneo com QR Code oficial ou doar materiais essenciais como ração e remédios.</p>
+
+            <!-- Seção de Identificação do Doador -->
+            <div class="donor-ident-box">
+                <div id="usuarioAutenticadoBox" style="display: none;">
+                    <h3>Identificação do Doador</h3>
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;">
+                        <span class="donor-badge" id="badgeNomeUsuario">👤 Olá, Carregando...</span>
+                        <label style="font-size: 0.92rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;">
+                            <input type="checkbox" id="anonimoAuthCheck" style="width: auto;">
+                            Prefiro que esta doação apareça como "Usuário anônimo"
+                        </label>
+                    </div>
+                </div>
+
+                <div id="visitanteIdentBox">
+                    <h3>Identificação do Doador</h3>
+                    <p style="font-size: 0.9rem; color: var(--muted); margin-top: 0; margin-bottom: 0.75rem;">Você está realizando a doação como visitante. Informe como deseja ser identificado no mural:</p>
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <label for="nomeDoadorInput">Nome do Doador</label>
+                        <input type="text" id="nomeDoadorInput" placeholder="Ex.: Maria Silva, João Santos...">
+                    </div>
+                    <label style="font-size: 0.92rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;">
+                        <input type="checkbox" id="anonimoVisitanteCheck" style="width: auto;">
+                        Doar anonimamente (exibir no mural como "Usuário anônimo")
+                    </label>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <!-- Card 1: Doação Financeira (PIX) -->
+                <article class="card">
+                    <h2>💰 Doação Financeira (PIX)</h2>
+                    <p style="color: var(--muted); font-size: 0.92rem;">Informe o valor em reais para gerar seu QR Code e código PIX Copia e Cola oficiais.</p>
+
+                    <label for="valor">Valor da Doação (R$)</label>
+                    <div class="preset-buttons">
+                        <button type="button" class="preset-btn" data-val="10">R$ 10,00</button>
+                        <button type="button" class="preset-btn" data-val="20">R$ 20,00</button>
+                        <button type="button" class="preset-btn" data-val="50">R$ 50,00</button>
+                        <button type="button" class="preset-btn" data-val="100">R$ 100,00</button>
+                    </div>
+                    <input type="number" id="valor" step="0.01" min="1" placeholder="Ex.: 25.00">
+                    <small id="valorHelper" class="helper-text">Digite qualquer valor positivo em reais.</small>
+
+                    <button id="pixBtn" class="primary-btn" type="button" style="margin-top: 1rem; width: 100%;">
+                        Gerar QR Code PIX
+                    </button>
+
+                    <!-- Área dinâmica do PIX gerado -->
+                    <div id="pixContainer" class="pix-result-container">
+                        <span id="pixStatusBadge" class="pix-status-badge status-aguardando">Aguardando pagamento</span>
+                        
+                        <h3 id="pixValorDisplay" style="margin: 0; color: var(--primary-dark); font-size: 1.5rem;">R$ 0,00</h3>
+                        
+                        <div class="pix-info-grid">
+                            <div><strong>Beneficiário:</strong><br><span id="pixBeneficiario">PetAlert Proteção Animal</span></div>
+                            <div><strong>Chave PIX:</strong><br><span id="pixChave">contato@petalert.com.br</span></div>
+                            <div><strong>Cidade:</strong><br><span id="pixCidade">Ourinhos / SP</span></div>
+                            <div><strong>Identificador:</strong><br><span id="pixTxid">***</span></div>
+                        </div>
+
+                        <div class="pix-qrcode-box" id="qrcodeCanvasBox" title="Aponte a câmera do seu app de banco">
+                            <!-- QR Code renderizado via canvas/SVG pelo script -->
+                        </div>
+
+                        <label style="display:block; text-align:left; font-weight:700; margin-top:0.6rem;">Código PIX Copia e Cola:</label>
+                        <div class="pix-copy-box">
+                            <textarea id="pixCopiaCola" readonly placeholder="Carregando código..."></textarea>
+                            <button type="button" id="copiarPixBtn" class="pix-copy-btn">Copiar</button>
+                        </div>
+
+                        <div class="pix-instructions">
+                            <strong>Instruções para pagamento:</strong>
+                            <ol>
+                                <li>Abra o aplicativo do seu banco ou carteira digital no celular;</li>
+                                <li>Escolha a opção <strong>PIX</strong> e selecione <strong>Ler QR Code</strong> ou <strong>PIX Copia e Cola</strong>;</li>
+                                <li>Cole o código acima ou aponte a câmera para o QR Code gerado;</li>
+                                <li>Confira o nome do beneficiário e confirme a transferência.</li>
+                            </ol>
+                            <p style="margin: 0.6rem 0 0; font-size: 0.85rem; color: #9a3412;">
+                                ℹ️ <em>O sistema registrará seu PIX no banco de dados com status "Aguardando pagamento". A doação só constará como confirmada após a validação bancária.</em>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: Doação de Insumos -->
+                <article class="card">
+                    <h2>📦 Doação de Insumos e Materiais</h2>
+                    <div id="coletaInfo" class="info-coleta">Carregando ponto de coleta...</div>
+
+                    <div class="form-group">
+                        <label for="item">Item ou Material</label>
+                        <input type="text" id="item" placeholder="Ex.: Ração para cães, Cobertor, Medicamentos...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantidade">Quantidade / Tamanho (opcional)</label>
+                        <input type="text" id="quantidade" placeholder="Ex.: 2 pacotes de 15kg, 3 unidades">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contato">Contato para combinar entrega (opcional)</label>
+                        <input type="text" id="contato" placeholder="Telefone / WhatsApp para contato">
+                    </div>
+
+                    <!-- Validação de ID de item cadastrado -->
+                    <div class="form-group" style="margin-top: 1.2rem; background: var(--surface-alt); padding: 1rem; border-radius: 12px; border: 1px solid var(--border);">
+                        <label for="idItem">Consultar ID de item cadastrado</label>
+                        <div class="inline-field">
+                            <input type="number" id="idItem" placeholder="Ex.: 1">
+                            <button id="validarItemBtn" class="secondary-btn" type="button" style="padding: 0.8rem 1rem;">Verificar ID</button>
+                        </div>
+                        <small id="validacaoItem" class="helper-text">Informe um ID para verificar se já existe no banco.</small>
+                    </div>
+
+                    <button id="insumoBtn" class="primary-btn" type="button" style="margin-top: 0.5rem; width: 100%;">
+                        Registrar Doação de Insumo
+                    </button>
+                </article>
+            </div>
+
+            <!-- Mural de Doadores Reais do Banco de Dados -->
+            <div id="listaDoadoresContainer" class="card" style="margin-top: 2rem;">
+                <h2>🏆 Mural de Apoiadores do PetAlert</h2>
+                <p style="color: var(--muted); margin-bottom: 1rem;">Agradecemos de coração a todos que contribuem para salvar e cuidar dos nossos animais. Os registros abaixo são sincronizados em tempo real com o banco de dados oficial.</p>
+
+                <div class="mural-sections">
+                    <div class="mural-col">
+                        <h3>🪙 Doações Financeiras (PIX)</h3>
+                        <ul id="muralFinanceiro" class="doadores-list">
+                            <li><span>Carregando doações financeiras...</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="mural-col">
+                        <h3>🐾 Doações de Insumos</h3>
+                        <ul id="muralInsumos" class="doadores-list">
+                            <li><span>Carregando doações de materiais...</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Confirmação -->
+    <div id="modalConfirmacao" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-icon">🎉</div>
+            <h3 id="modalTitulo">Parabéns pela doação!</h3>
+            <p id="modalMensagem">Sua contribuição ajuda a transformar vidas e acolher animais com mais cuidado e amor.</p>
+            <div id="modalResumo" class="modal-resumo"></div>
+            <button class="primary-btn" type="button" onclick="fechaModal()" style="width: 100%;">Concluir e Ver Mural</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="qrcode.min.js"></script>
+    <script src="../auth-ui.js"></script>
+    <script>
+        const endpoint = new URL('../index.php', window.location.href);
+        endpoint.searchParams.set('rota', 'doacao_dinheiro');
+
+        // Elementos de Identificação
+        const usuarioAutenticadoBox = document.getElementById('usuarioAutenticadoBox');
+        const visitanteIdentBox = document.getElementById('visitanteIdentBox');
+        const badgeNomeUsuario = document.getElementById('badgeNomeUsuario');
+        const anonimoAuthCheck = document.getElementById('anonimoAuthCheck');
+        const nomeDoadorInput = document.getElementById('nomeDoadorInput');
+        const anonimoVisitanteCheck = document.getElementById('anonimoVisitanteCheck');
+
+        // Elementos Financeiros / PIX
+        const valorInput = document.getElementById('valor');
+        const pixBtn = document.getElementById('pixBtn');
+        const pixContainer = document.getElementById('pixContainer');
+        const pixValorDisplay = document.getElementById('pixValorDisplay');
+        const pixBeneficiario = document.getElementById('pixBeneficiario');
+        const pixChave = document.getElementById('pixChave');
+        const pixCidade = document.getElementById('pixCidade');
+        const pixTxid = document.getElementById('pixTxid');
+        const qrcodeCanvasBox = document.getElementById('qrcodeCanvasBox');
+        const pixCopiaCola = document.getElementById('pixCopiaCola');
+        const copiarPixBtn = document.getElementById('copiarPixBtn');
+        const presetBtns = document.querySelectorAll('.preset-btn');
+
+        // Elementos de Insumos
+        const itemInput = document.getElementById('item');
+        const quantidadeInput = document.getElementById('quantidade');
+        const contatoInput = document.getElementById('contato');
+        const insumoBtn = document.getElementById('insumoBtn');
+        const idItemInput = document.getElementById('idItem');
+        const validarItemBtn = document.getElementById('validarItemBtn');
+        const validacaoItem = document.getElementById('validacaoItem');
+        const coletaInfo = document.getElementById('coletaInfo');
+
+        // Mural
+        const muralFinanceiro = document.getElementById('muralFinanceiro');
+        const muralInsumos = document.getElementById('muralInsumos');
+
+        // Modal
+        const modalConfirmacao = document.getElementById('modalConfirmacao');
+        const modalTitulo = document.getElementById('modalTitulo');
+        const modalMensagem = document.getElementById('modalMensagem');
+        const modalResumo = document.getElementById('modalResumo');
+
+        let qrcodeInstance = null;
+        let usuarioLogado = null;
+
+        // Detectar usuário logado via storage ou backend
+        function checarAutenticacao() {
+            try {
+                const raw = localStorage.getItem('petalert_usuario') || sessionStorage.getItem('petalert_usuario');
+                if (raw) {
+                    usuarioLogado = JSON.parse(raw);
+                }
+            } catch (e) {
+                usuarioLogado = null;
+            }
+
+            if (usuarioLogado && usuarioLogado.nome) {
+                usuarioAutenticadoBox.style.display = 'block';
+                visitanteIdentBox.style.display = 'none';
+                badgeNomeUsuario.textContent = `👤 ${usuarioLogado.nome} (conectado)`;
+            } else {
+                usuarioAutenticadoBox.style.display = 'none';
+                visitanteIdentBox.style.display = 'block';
+            }
+        }
+
+        // Determinar nome do doador de acordo com o estado
+        function obterNomeDoador() {
+            if (usuarioLogado && usuarioLogado.nome) {
+                if (anonimoAuthCheck.checked) {
+                    return 'Usuário anônimo';
+                }
+                return usuarioLogado.nome;
+            }
+
+            if (anonimoVisitanteCheck.checked) {
+                return 'Usuário anônimo';
+            }
+
+            const nomeDigitado = nomeDoadorInput.value.trim();
+            return nomeDigitado !== '' ? nomeDigitado : 'Usuário anônimo';
+        }
+
+        anonimoVisitanteCheck.addEventListener('change', () => {
+            if (anonimoVisitanteCheck.checked) {
+                nomeDoadorInput.value = '';
+                nomeDoadorInput.disabled = true;
+                nomeDoadorInput.placeholder = 'Doação anônima selecionada';
+            } else {
+                nomeDoadorInput.disabled = false;
+                nomeDoadorInput.placeholder = 'Ex.: Maria Silva, João Santos...';
+            }
+        });
+
+        // Seleção de valores rápidos
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                presetBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                valorInput.value = Number(btn.dataset.val).toFixed(2);
+                resetarPixAposMudancaValor();
+            });
+        });
+
+        valorInput.addEventListener('input', () => {
+            presetBtns.forEach(b => b.classList.remove('active'));
+            resetarPixAposMudancaValor();
+        });
+
+        // 1.2 Requisito 7: Atualizar/Resetar QR code quando o valor for alterado, sem manter código antigo
+        function resetarPixAposMudancaValor() {
+            if (pixContainer.style.display === 'block') {
+                pixContainer.style.display = 'none';
+                qrcodeCanvasBox.innerHTML = '';
+                pixCopiaCola.value = '';
+            }
+        }
+
+        // 1.2 Gerar QR Code PIX oficial
+        pixBtn.addEventListener('click', async () => {
+            const valorNum = parseFloat(valorInput.value);
+
+            if (isNaN(valorNum) || valorNum <= 0) {
+                alert('Por favor, informe um valor de doação válido em reais (maior que zero).');
+                valorInput.focus();
+                return;
+            }
+
+            const nomeDoador = obterNomeDoador();
+            const anonimo = (nomeDoador === 'Usuário anônimo');
+
+            pixBtn.disabled = true;
+            pixBtn.textContent = 'Gerando PIX oficial...';
+
+            try {
+                const url = new URL(endpoint.toString());
+                url.searchParams.set('acao', 'gerar_pix');
+
+                const response = await fetch(url.toString(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        valor: valorNum,
+                        nome_doador: nomeDoador,
+                        anonimo: anonimo,
+                        id_usuario: usuarioLogado?.id || usuarioLogado?.id_usuario || null
+                    })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({}));
+                    throw new Error(err.mensagem || 'Falha ao gerar QR Code PIX.');
+                }
+
+                const dados = await response.json();
+
+                // Preencher informações do PIX gerado
+                pixValorDisplay.textContent = dados.valor_formatado || `R$ ${valorNum.toFixed(2).replace('.', ',')}`;
+                pixBeneficiario.textContent = dados.beneficiario || 'PetAlert Proteção Animal';
+                pixChave.textContent = dados.chave_pix || 'contato@petalert.com.br';
+                pixCidade.textContent = dados.cidade || 'Ourinhos / SP';
+                pixTxid.textContent = dados.txid || '***';
+                pixCopiaCola.value = dados.codigo_pix || '';
+
+                // Renderizar QR Code real com a biblioteca QRCode.js
+                qrcodeCanvasBox.innerHTML = '';
+                if (typeof QRCode !== 'undefined') {
+                    new QRCode(qrcodeCanvasBox, {
+                        text: dados.codigo_pix,
+                        width: 210,
+                        height: 210,
+                        colorDark: '#1f2937',
+                        colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                } else {
+                    // Fallback visual caso o script JS falhe
+                    const img = document.createElement('img');
+                    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=210x210&data=${encodeURIComponent(dados.codigo_pix)}`;
+                    img.alt = 'QR Code PIX';
+                    qrcodeCanvasBox.appendChild(img);
+                }
+
+                pixContainer.style.display = 'block';
+                pixContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Erro ao gerar PIX.');
+            } finally {
+                pixBtn.disabled = false;
+                pixBtn.textContent = 'Gerar QR Code PIX';
+            }
+        });
+
+        // Botão Copiar PIX
+        copiarPixBtn.addEventListener('click', async () => {
+            const codigo = pixCopiaCola.value;
+            if (!codigo) return;
+
+            try {
+                await navigator.clipboard.writeText(codigo);
+                copiarPixBtn.textContent = 'Copiado! ✓';
+                copiarPixBtn.classList.add('copied');
+                setTimeout(() => {
+                    copiarPixBtn.textContent = 'Copiar';
+                    copiarPixBtn.classList.remove('copied');
+                }, 2500);
+            } catch (e) {
+                pixCopiaCola.select();
+                document.execCommand('copy');
+                copiarPixBtn.textContent = 'Copiado! ✓';
+                setTimeout(() => { copiarPixBtn.textContent = 'Copiar'; }, 2500);
+            }
+        });
+
+        // 1.4 Doação de Insumos
+        insumoBtn.addEventListener('click', async () => {
+            const item = itemInput.value.trim();
+            const quantidade = quantidadeInput.value.trim();
+            const contato = contatoInput.value.trim();
+
+            if (!item) {
+                alert('Por favor, informe o item ou material a ser doado (Ex.: Ração, Cobertor, etc.).');
+                itemInput.focus();
+                return;
+            }
+
+            const nomeDoador = obterNomeDoador();
+            const anonimo = (nomeDoador === 'Usuário anônimo');
+
+            insumoBtn.disabled = true;
+            insumoBtn.textContent = 'Registrando...';
+
+            try {
+                const url = new URL(endpoint.toString());
+                url.searchParams.set('acao', 'doar_insumo');
+
+                const response = await fetch(url.toString(), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        item: item,
+                        quantidade: quantidade,
+                        contato: contato,
+                        nome_doador: nomeDoador,
+                        anonimo: anonimo,
+                        id_usuario: usuarioLogado?.id || usuarioLogado?.id_usuario || null
+                    })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({}));
+                    throw new Error(err.mensagem || 'Falha ao registrar doação de insumo.');
+                }
+
+                const dados = await response.json();
+
+                // Exibir confirmação no formato do requisito 1.4: "Maria Silva — 2 pacotes de ração para cães."
+                modalTitulo.textContent = 'Doação Registrada!';
+                modalMensagem.textContent = 'Muito obrigado por ajudar nossos animais com materiais indispensáveis!';
+                modalResumo.textContent = dados.resumo || `${nomeDoador} — ${quantidade ? quantidade + ' de ' : ''}${item}`;
+                abrirModal();
+
+                // Limpar campos
+                itemInput.value = '';
+                quantidadeInput.value = '';
+                contatoInput.value = '';
+
+                // Atualizar mural com o novo registro do banco
+                await carregarMural();
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Erro ao registrar doação de insumo.');
+            } finally {
+                insumoBtn.disabled = false;
+                insumoBtn.textContent = 'Registrar Doação de Insumo';
+            }
+        });
+
+        // 1.4 Validação do ID do item
+        validarItemBtn.addEventListener('click', async () => {
+            const id = idItemInput.value.trim();
+            if (!id || Number(id) <= 0) {
+                validacaoItem.textContent = 'Digite um número de ID válido.';
+                validacaoItem.className = 'helper-text error';
+                return;
+            }
+
+            validarItemBtn.disabled = true;
+            validacaoItem.textContent = 'Consultando banco de dados...';
+            validacaoItem.className = 'helper-text';
+
+            try {
+                const url = new URL(endpoint.toString());
+                url.searchParams.set('acao', 'validar_item');
+                url.searchParams.set('id', id);
+
+                const response = await fetch(url.toString(), {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                const dados = await response.json();
+
+                if (response.ok && dados.encontrado) {
+                    const desc = dados.quantidade ? `${dados.quantidade} de ${dados.objeto_doado}` : dados.objeto_doado;
+                    validacaoItem.textContent = `✓ Item #${id} encontrado: ${desc} (Tipo: ${dados.tipo_doacao})`;
+                    validacaoItem.className = 'helper-text success';
+                } else {
+                    validacaoItem.textContent = dados.mensagem || `✗ Item #${id} não foi encontrado no banco de dados.`;
+                    validacaoItem.className = 'helper-text error';
+                }
+            } catch (e) {
+                validacaoItem.textContent = 'Erro ao consultar item no servidor.';
+                validacaoItem.className = 'helper-text error';
+            } finally {
+                validarItemBtn.disabled = false;
+            }
+        });
+
+        // Carregar Mural de Doadores
+        async function carregarMural() {
+            try {
+                const url = new URL(endpoint.toString());
+                url.searchParams.set('acao', 'mural');
+
+                const response = await fetch(url.toString(), {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (!response.ok) throw new Error();
+                const dados = await response.json();
+
+                // 1. Doações financeiras (confirmadas)
+                const finList = dados.financeiras || [];
+                if (finList.length === 0) {
+                    muralFinanceiro.innerHTML = '<li style="color: var(--muted);">Nenhuma doação financeira confirmada no momento.</li>';
+                } else {
+                    muralFinanceiro.innerHTML = finList.map(item => `
+                        <li>
+                            <strong>${item.nome}</strong>
+                            <span class="badge-valor">${item.valor}</span>
+                        </li>
+                    `).join('');
+                }
+
+                // 2. Doações de insumos (confirmadas)
+                const insList = dados.insumos || [];
+                if (insList.length === 0) {
+                    muralInsumos.innerHTML = '<li style="color: var(--muted);">Nenhuma doação de insumos registrada no momento.</li>';
+                } else {
+                    muralInsumos.innerHTML = insList.map(item => {
+                        const itemDesc = item.quantidade ? `${item.quantidade} de ${item.item}` : item.item;
+                        return `
+                            <li>
+                                <strong>${item.nome}</strong>
+                                <span class="badge-insumo">${itemDesc}</span>
+                            </li>
+                        `;
+                    }).join('');
+                }
+            } catch (e) {
+                muralFinanceiro.innerHTML = '<li style="color: #b91c1c;">Erro ao carregar doações financeiras.</li>';
+                muralInsumos.innerHTML = '<li style="color: #b91c1c;">Erro ao carregar doações de insumos.</li>';
+            }
+        }
+
+        // Ponto de coleta via CEP
+        async function carregarEnderecoColeta() {
+            try {
+                const resposta = await fetch('https://viacep.com.br/ws/19904716/json/');
+                const dados = await resposta.json();
+                if (dados && !dados.erro) {
+                    const endereco = `${dados.logradouro || 'Rua Principal'}, ${dados.bairro || 'Centro'} - ${dados.localidade || 'Ourinhos'}/${dados.uf || 'SP'}`;
+                    coletaInfo.innerHTML = `📍 <strong>Ponto de Coleta PetAlert:</strong> ${endereco} (CEP ${dados.cep || '19904-716'})`;
+                } else {
+                    coletaInfo.innerHTML = '📍 <strong>Ponto de Coleta PetAlert:</strong> Av. Conselheiro Rodrigues Alves, 236 - Centro, Ourinhos/SP (CEP 19904-716)';
+                }
+            } catch (e) {
+                coletaInfo.innerHTML = '📍 <strong>Ponto de Coleta PetAlert:</strong> Av. Conselheiro Rodrigues Alves, 236 - Centro, Ourinhos/SP (CEP 19904-716)';
+            }
+        }
+
+        function abrirModal() {
+            modalConfirmacao.classList.add('show');
+            modalConfirmacao.setAttribute('aria-hidden', 'false');
+        }
+
+        function fechaModal() {
+            modalConfirmacao.classList.remove('show');
+            modalConfirmacao.setAttribute('aria-hidden', 'true');
+        }
+
+        // Inicialização
+        checarAutenticacao();
+        carregarEnderecoColeta();
+        carregarMural();
+    </script>
+</body>
+</html>

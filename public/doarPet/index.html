@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Doar Pet</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html" class="active">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+            <a href="../login/index.html" class="nav-entrar-btn" id="navLoginLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-shell">
+            <h1>Cadastrar Pet para Adoção / Doação</h1>
+            <p style="color: var(--muted); margin-bottom: 1.5rem;">Preencha todos os campos obrigatórios para encontrar um novo lar para o animalzinho.</p>
+
+            <form id="formPet" enctype="multipart/form-data">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nomePet">Nome do Pet *</label>
+                        <input type="text" id="nomePet" placeholder="Ex.: Thor, Luna, Pipoca" required>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="especie">Espécie *</label>
+                            <select id="especie" required>
+                                <option value="">Selecione a espécie...</option>
+                                <option value="Cachorro">Cachorro</option>
+                                <option value="Gato">Gato</option>
+                                <option value="Coelho">Coelho</option>
+                                <option value="Pássaro">Pássaro</option>
+                                <option value="Hamster">Hamster</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="grupoEspecieOutra" style="display: none;">
+                            <label for="especieOutra">Especifique a Espécie *</label>
+                            <input type="text" id="especieOutra" placeholder="Ex.: Tartaruga, Furão, Cavalo...">
+                        </div>
+                        <div class="form-group">
+                            <label for="raca">Raça *</label>
+                            <input type="text" id="raca" placeholder="Ex.: SRD (Vira-lata), Siamês, Labrador..." required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label for="idade">Idade em Anos (digitada) *</label>
+                            <input type="number" id="idade" min="0" max="40" step="0.5" placeholder="Ex.: 2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="porte">Porte *</label>
+                            <select id="porte" required>
+                                <option value="">Selecione...</option>
+                                <option value="Pequeno">Pequeno</option>
+                                <option value="Médio">Médio</option>
+                                <option value="Grande">Grande</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="peso">Peso (em kg) *</label>
+                            <input type="number" id="peso" min="0.1" max="150" step="0.1" placeholder="Ex.: 6.5" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cor">Cor do Pet *</label>
+                        <input type="text" id="cor" placeholder="Ex.: Preto e Branco, Caramelo, Rajado, Amarelo..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivo_doacao">Motivo da Doação *</label>
+                        <textarea id="motivo_doacao" rows="3" placeholder="Explique obrigatoriamente o motivo da doação (ex: resgate da rua, mudança sem espaço, ninhada inesperada...)" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descricao">Breve História e Observações *</label>
+                        <textarea id="descricao" rows="4" placeholder="Conte um pouco sobre a história do animal, temperamento, convivência com outros pets, vacinas e cuidados..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="foto">Foto do Pet *</label>
+                        <input type="file" name="foto" id="foto" accept="image/*" class="form-control" required>
+                        <img id="fotoPreview" src="" alt="Prévia da foto" style="display:none; max-width:200px; max-height:200px; border-radius:12px; margin-top:10px; object-fit:cover;">
+                    </div>
+
+                    <button type="button" class="primary-btn" id="publicar">Publicar Pet para Adoção</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Modal Informativo: Autenticação Necessária para Doar Pet (Requisito 35) -->
+        <div id="modalAuthDoarPet" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(4px);">
+            <div class="modal-content" style="background:#fff; border-radius:26px; max-width:480px; width:100%; padding:2.4rem 2rem; box-shadow:0 24px 48px rgba(90,67,58,0.25); text-align:center; border:1px solid var(--border);">
+                <div style="width:70px; height:70px; border-radius:50%; background:#fff0ea; color:var(--primary); font-size:2.3rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1.3rem auto; border:2px solid #fed7aa; box-shadow:0 8px 16px rgba(244,124,32,0.15);">
+                    🐾
+                </div>
+                <h2 style="font-size:1.5rem; font-weight:800; color:var(--text); margin-bottom:0.75rem;">Cadastro de Pet para Doação</h2>
+                <p id="msgAuthDoarPet" style="font-size:1.08rem; font-weight:700; color:var(--text); margin-bottom:0.6rem; line-height:1.45;">
+                    Para doar um pet, você precisa criar uma conta ou entrar no PetAlert.
+                </p>
+                <p style="font-size:0.92rem; color:var(--muted); margin-bottom:1.8rem; line-height:1.5;">
+                    Seus dados preenchidos serão preservados automaticamente para você continuar de onde parou após entrar na sua conta.
+                </p>
+                <div style="display:flex; flex-direction:column; gap:0.85rem;">
+                    <button type="button" id="btnDoarCriarConta" class="secondary-btn" style="width:100%; font-size:1rem; padding:0.9rem; font-weight:800; cursor:pointer;">
+                        Criar conta
+                    </button>
+                    <button type="button" id="btnDoarEntrar" class="primary-btn" style="width:100%; font-size:1rem; padding:0.9rem; font-weight:800; cursor:pointer;">
+                        Entrar
+                    </button>
+                    <a href="../pets/index.html" style="color:var(--muted); text-decoration:none; padding:0.5rem; font-weight:600; font-size:0.92rem; display:inline-block;">
+                        ← Voltar para a lista de pets
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+    <script src="../auth-ui.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

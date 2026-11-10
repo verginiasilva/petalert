@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Meu Perfil e Configurações</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../chatDoador/index.html">Chat doador</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+            <a href="../perfil/index.html" class="active">Meu Perfil</a>
+        </nav>
+    </header>
+
+    <main class="perfil-main">
+        <section class="perfil-shell">
+            <!-- Cabeçalho do Perfil -->
+            <div class="perfil-hero-card">
+                <div class="perfil-avatar-wrapper" style="position: relative; display: inline-flex; flex-direction: column; align-items: center;">
+                    <div class="perfil-avatar" id="avatarContainer" style="overflow: hidden; position: relative;">
+                        <img id="avatarFotoImg" src="" alt="Foto de perfil" style="display:none; width:100%; height:100%; object-fit:cover;">
+                        <span id="avatarLetra">U</span>
+                    </div>
+                    <label for="inputFotoPerfil" class="btn-trocar-foto-badge" title="Alterar foto de perfil" style="position: absolute; bottom: -4px; right: -4px; background: #fff; border: 2px solid var(--primary); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(0,0,0,0.18); transition: transform 0.2s ease;">
+                        📷
+                    </label>
+                    <input type="file" id="inputFotoPerfil" accept="image/jpeg,image/png,image/webp,image/jpg" style="display: none;">
+                </div>
+                <div class="perfil-hero-info">
+                    <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                        <h1 id="heroNome" style="margin: 0; font-size: 1.8rem; font-weight: 800;">Carregando perfil...</h1>
+                        <span id="heroBadgePerfil" class="perfil-badge-tipo">Carregando</span>
+                        <span id="heroBadgeIdentidade" class="badge-identidade pendente" title="Situação da verificação de identidade">
+                            ⏳ Verificação Pendente
+                        </span>
+                    </div>
+                    <p id="heroEmail" style="margin: 0.35rem 0 0.8rem 0; color: var(--muted); font-size: 0.98rem;"></p>
+                    <div class="perfil-quick-meta">
+                        <span id="heroMembroDesde">📅 Membro PetAlert</span>
+                        <span>•</span>
+                        <span id="heroStatusConta" style="color: #15803d; font-weight: 700;">● Conta Ativa</span>
+                    </div>
+                </div>
+                <div class="perfil-hero-actions">
+                    <button type="button" class="btn-sair-perfil" id="btnSairHeader" title="Sair da conta PetAlert">
+                        🚪 Sair da conta
+                    </button>
+                </div>
+            </div>
+
+            <!-- Abas de Navegação -->
+            <div class="perfil-nav-tabs" role="tablist">
+                <button type="button" class="perfil-tab active" id="tabBtnDados" role="tab" aria-selected="true" data-tab="tab-dados">
+                    👤 Meu Perfil
+                </button>
+                <button type="button" class="perfil-tab" id="tabBtnPessoas" role="tab" aria-selected="false" data-tab="tab-pessoas" style="display: none;">
+                    👥 Pessoas Cadastradas (Admin)
+                </button>
+                <button type="button" class="perfil-tab" id="tabBtnMeusPets" style="display:none;" onclick="window.location.href='../pets/index.html#meus'">
+                    🐾 Meus Pets
+                </button>
+                <button type="button" class="perfil-tab" id="tabBtnSeguranca" role="tab" aria-selected="false" data-tab="tab-seguranca">
+                    🔒 Alterar Senha
+                </button>
+                <button type="button" class="perfil-tab" id="tabBtnConfig" role="tab" aria-selected="false" data-tab="tab-config">
+                    ⚙️ Configurações & Conta
+                </button>
+            </div>
+
+            <!-- Mensagem de Feedback Global -->
+            <div id="feedbackAlerta" class="feedback-alerta" style="display: none;"></div>
+
+            <!-- ABA 1: DADOS DO PERFIL (VISUALIZAÇÃO E EDIÇÃO) -->
+            <div id="tab-dados" class="perfil-tab-content active" role="tabpanel">
+                <!-- Modo Visualização -->
+                <div id="painelVisualizacao" class="perfil-card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h2>Dados Pessoais Cadastrados</h2>
+                            <p style="color: var(--muted); margin: 0; font-size: 0.92rem;">Consulte as informações vinculadas à sua conta PetAlert.</p>
+                        </div>
+                        <button type="button" class="primary-btn" id="btnIniciarEdicao">
+                            ✏️ Editar informações
+                        </button>
+                    </div>
+
+                    <!-- Card de Situação da Identidade -->
+                    <div id="cardStatusIdentidade" class="identidade-status-card pendente">
+                        <div class="identidade-status-icone" id="iconeStatusIdentidade">⏳</div>
+                        <div class="identidade-status-detalhes">
+                            <h3 id="tituloStatusIdentidade" class="identidade-status-titulo">Verificação de Identidade: Pendente</h3>
+                            <p id="descStatusIdentidade" class="identidade-status-desc">
+                                Seus dados cadastrais (CPF, Nome Completo e Data de Nascimento) aguardam confirmação do endpoint oficial.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Nome Completo</span>
+                            <span class="info-valor" id="viewNome">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">CPF</span>
+                            <span class="info-valor" id="viewCpf">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Data de Nascimento</span>
+                            <span class="info-valor" id="viewDataNasc">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">E-mail</span>
+                            <span class="info-valor" id="viewEmail">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Telefone / WhatsApp</span>
+                            <span class="info-valor" id="viewTelefone">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">CEP</span>
+                            <span class="info-valor" id="viewCep">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Logradouro / Rua</span>
+                            <span class="info-valor" id="viewRua">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Número da Residência</span>
+                            <span class="info-valor" id="viewNumero">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Bairro</span>
+                            <span class="info-valor" id="viewBairro">—</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Cidade / Estado</span>
+                            <span class="info-valor" id="viewCidadeEstado">—</span>
+                        </div>
+                        <div class="info-item full-width">
+                            <span class="info-label">Endereço Completo Consolidado</span>
+                            <span class="info-valor" id="viewEnderecoCompleto">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modo Edição -->
+                <div id="painelEdicao" class="perfil-card" style="display: none;">
+                    <div class="card-header-flex">
+                        <div>
+                            <h2>Editar Informações Pessoais</h2>
+                            <p style="color: var(--muted); margin: 0; font-size: 0.92rem;">Atualize seus dados pessoais. O identificador da conta não pode ser alterado.</p>
+                        </div>
+                        <button type="button" class="secondary-btn" id="btnCancelarEdicao">
+                            ✕ Cancelar
+                        </button>
+                    </div>
+
+                    <form id="formEditarPerfil">
+                        <div class="alerta-identidade-edicao">
+                            <span class="alerta-identidade-icon">🛡️</span>
+                            <div>
+                                <strong>Atenção sobre dados de identificação:</strong>
+                                <p>A alteração do seu <strong>Nome Completo</strong>, <strong>CPF</strong> ou <strong>Data de Nascimento</strong> solicitará uma nova validação oficial de identidade. Se a verificação não for aprovada, seus dados anteriores serão mantidos.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="editNome">Nome Completo *</label>
+                                <input type="text" id="editNome" required maxlength="80">
+                            </div>
+
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="editCpf">CPF (somente números ou formatado)</label>
+                                    <input type="text" id="editCpf" maxlength="14" placeholder="000.000.000-00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editDataNasc">Data de Nascimento</label>
+                                    <input type="date" id="editDataNasc">
+                                </div>
+                            </div>
+
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="editEmail">E-mail *</label>
+                                    <input type="email" id="editEmail" required maxlength="120">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editTelefone">Telefone / WhatsApp *</label>
+                                    <input type="tel" id="editTelefone" required maxlength="20" placeholder="(00) 00000-0000">
+                                </div>
+                            </div>
+
+                            <div class="form-row-3">
+                                <div class="form-group">
+                                    <label for="editCep">CEP *</label>
+                                    <input type="text" id="editCep" required maxlength="10" placeholder="00000-000">
+                                    <small id="editCepStatus" style="font-size:0.8rem; color:var(--muted);"></small>
+                                </div>
+                                <div class="form-group" style="grid-column: span 2;">
+                                    <label for="editRua">Rua / Logradouro *</label>
+                                    <input type="text" id="editRua" required maxlength="150">
+                                </div>
+                            </div>
+
+                            <div class="form-row-3">
+                                <div class="form-group">
+                                    <label for="editNumero">Número da Residência *</label>
+                                    <input type="text" id="editNumero" required maxlength="20" placeholder="Ex.: 123">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editBairro">Bairro</label>
+                                    <input type="text" id="editBairro" maxlength="100">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editCidade">Cidade</label>
+                                    <input type="text" id="editCidade" maxlength="100">
+                                </div>
+                            </div>
+
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="editEstado">Estado (UF)</label>
+                                    <input type="text" id="editEstado" maxlength="2" placeholder="Ex.: SP">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editTipoUsuario">Perfil no PetAlert</label>
+                                    <select id="editTipoUsuario">
+                                        <option value="adotante">Adotante (Interessado em adotar pets)</option>
+                                        <option value="doador">Doador (Tutor/Protetor que cadastra pets)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-actions-bar">
+                                <button type="button" class="secondary-btn" id="btnDescartarEdicao">
+                                    Descartar alterações
+                                </button>
+                                <button type="submit" class="primary-btn" id="btnSalvarPerfil">
+                                    💾 Salvar informações
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ABA: CONSULTA DE PESSOAS CADASTRADAS (READ) -->
+            <div id="tab-pessoas" class="perfil-tab-content" role="tabpanel" style="display: none;">
+                <div class="perfil-card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h2>Pessoas Cadastradas no PetAlert</h2>
+                            <p style="color: var(--muted); margin: 0; font-size: 0.92rem;">
+                                Consulta em tempo real de pessoas cadastradas diretamente do banco de dados MySQL.
+                            </p>
+                        </div>
+                        <button type="button" class="secondary-btn" id="btnRecarregarPessoas" title="Atualizar listagem do banco">
+                            🔄 Atualizar Listagem
+                        </button>
+                    </div>
+
+                    <!-- Filtros e Busca Rápida -->
+                    <div style="margin: 1.2rem 0; display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center;">
+                        <input type="text" id="filtroNomePessoa" placeholder="🔍 Buscar por nome, e-mail ou cidade..." style="flex: 2; min-width: 220px; padding: 0.65rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.92rem;">
+                        <select id="filtroTipoPessoa" style="flex: 1; min-width: 160px; padding: 0.65rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.92rem;">
+                            <option value="">Todos os perfis</option>
+                            <option value="adotante">Apenas Adotantes</option>
+                            <option value="doador">Apenas Doadores</option>
+                        </select>
+                        <span id="contadorPessoas" style="font-weight: 700; color: var(--primary-dark); font-size: 0.92rem; white-space: nowrap;">
+                            Carregando...
+                        </span>
+                    </div>
+
+                    <div id="loadingPessoas" style="text-align: center; padding: 2rem; color: var(--muted); display: none;">
+                        Carregando registros do MySQL...
+                    </div>
+
+                    <div id="tabelaPessoasWrapper" style="overflow-x: auto; margin-top: 1rem;">
+                        <table class="tabela-pessoas" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem;">
+                            <thead>
+                                <tr style="background: var(--bg-soft, #f8fafc); border-bottom: 2px solid var(--border);">
+                                    <th style="padding: 0.75rem 0.9rem;">Nome</th>
+                                    <th style="padding: 0.75rem 0.9rem;">Perfil</th>
+                                    <th style="padding: 0.75rem 0.9rem;">E-mail</th>
+                                    <th style="padding: 0.75rem 0.9rem;">Telefone</th>
+                                    <th style="padding: 0.75rem 0.9rem;">Cidade / UF</th>
+                                    <th style="padding: 0.75rem 0.9rem;">Cadastro</th>
+                                    <th style="padding: 0.75rem 0.9rem;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpoTabelaPessoas">
+                                <!-- Preenchido dinamicamente via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 2: SEGURANÇA (ALTERAR SENHA) -->
+            <div id="tab-seguranca" class="perfil-tab-content" role="tabpanel" style="display: none;">
+                <div class="perfil-card">
+                    <div class="card-header-flex">
+                        <div>
+                            <h2>Alteração de Senha</h2>
+                            <p style="color: var(--muted); margin: 0; font-size: 0.92rem;">
+                                Para sua proteção, informe sua senha atual antes de cadastrar uma nova senha.
+                            </p>
+                        </div>
+                    </div>
+
+                    <form id="formAlterarSenha" style="max-width: 580px; margin-top: 1.2rem;">
+                        <div class="form-group">
+                            <label for="senhaAtual">Senha Atual *</label>
+                            <div class="password-field-wrapper">
+                                <input type="password" id="senhaAtual" required placeholder="Digite sua senha atual">
+                                <button type="button" class="btn-toggle-pass" data-target="senhaAtual" aria-label="Mostrar ou ocultar senha">👁️</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="novaSenha">Nova Senha * (mínimo de 6 caracteres)</label>
+                            <div class="password-field-wrapper">
+                                <input type="password" id="novaSenha" required minlength="6" placeholder="Digite sua nova senha">
+                                <button type="button" class="btn-toggle-pass" data-target="novaSenha" aria-label="Mostrar ou ocultar senha">👁️</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmarNovaSenha">Confirmar Nova Senha *</label>
+                            <div class="password-field-wrapper">
+                                <input type="password" id="confirmarNovaSenha" required minlength="6" placeholder="Repita a nova senha">
+                                <button type="button" class="btn-toggle-pass" data-target="confirmarNovaSenha" aria-label="Mostrar ou ocultar senha">👁️</button>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.5rem;">
+                            <button type="submit" class="primary-btn" id="btnSalvarSenha">
+                                🔐 Atualizar Senha
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ABA 3: CONFIGURAÇÕES & CONTA -->
+            <div id="tab-config" class="perfil-tab-content" role="tabpanel" style="display: none;">
+                <div class="perfil-card">
+                    <h2>Dados da Conta</h2>
+                    <p style="color: var(--muted); margin-bottom: 1.5rem; font-size: 0.92rem;">
+                        Resumo dos dados técnicos e identificação no PetAlert.
+                    </p>
+
+                    <div class="config-summary-box">
+                        <div class="summary-line">
+                            <strong>Identificador da Conta (ID):</strong>
+                            <span id="configIdUsuario">#—</span>
+                        </div>
+                        <div class="summary-line">
+                            <strong>Perfil de Acesso:</strong>
+                            <span id="configTipoPerfil">—</span>
+                        </div>
+                        <div class="summary-line">
+                            <strong>Data de Cadastro:</strong>
+                            <span id="configDataCadastro">—</span>
+                        </div>
+                        <div class="summary-line">
+                            <strong>Status da Conta:</strong>
+                            <span style="color:#15803d; font-weight:700;">Ativa e Regular</span>
+                        </div>
+                    </div>
+
+                    <hr style="border: 0; border-top: 1px solid var(--border); margin: 2rem 0;">
+
+                    <h2>Ações da Sessão e Conta</h2>
+                    <div class="config-actions-list">
+                        <!-- Sair da Conta -->
+                        <div class="config-action-item">
+                            <div class="config-action-text">
+                                <h3>Sair da conta</h3>
+                                <p>Encerre sua sessão atual no navegador com segurança sem perder seus dados.</p>
+                            </div>
+                            <button type="button" class="secondary-btn" id="btnSairConta">
+                                🚪 Sair da conta
+                            </button>
+                        </div>
+
+                        <!-- Excluir Conta -->
+                        <div class="config-action-item danger-item">
+                            <div class="config-action-text">
+                                <h3 style="color: #b91c1c;">Excluir minha conta permanentemente</h3>
+                                <p>Esta ação encerra sua conta no PetAlert, inativa animais associados e anonimiza registros legais.</p>
+                            </div>
+                            <button type="button" class="danger-btn" id="btnAbrirModalExcluir">
+                                ⚠️ Excluir minha conta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL 1: CONFIRMAÇÃO DE SAIR DA CONTA (LOGOUT) -->
+        <div id="modalConfirmarLogout" class="modal-overlay" style="display: none;">
+            <div class="modal-card">
+                <div class="modal-icon-badge" style="background: #fff4c9; color: #b45309;">
+                    🚪
+                </div>
+                <h2>Deseja realmente sair da conta?</h2>
+                <p style="color: var(--muted); margin-bottom: 1.6rem; font-size: 0.95rem;">
+                    Sua sessão será encerrada com segurança. Para acessar o perfil, doar pets ou conversar com doadores, você precisará entrar novamente.
+                </p>
+                <div class="modal-buttons-grid">
+                    <button type="button" class="secondary-btn" id="btnCancelarLogout">
+                        Cancelar
+                    </button>
+                    <button type="button" class="primary-btn" id="btnConfirmarLogout">
+                        Sim, sair agora
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL 2: CONFIRMAÇÃO DE EXCLUSÃO DEFINITIVA DA CONTA (REQUISITO 34) -->
+        <div id="modalExcluirConta" class="modal-overlay" style="display: none;">
+            <div class="modal-card modal-card-danger">
+                <div class="modal-icon-badge" style="background: #fee2e2; color: #b91c1c;">
+                    ⚠️
+                </div>
+                <h2 style="color: #991b1b;">Excluir Conta Permanentemente</h2>
+                <div class="exclusao-termos-box">
+                    <p><strong>Atenção:</strong> Esta operação é <strong>irreversível</strong> e terá as seguintes consequências imediatas:</p>
+                    <ul>
+                        <li>Seu acesso ao PetAlert será cancelado em definitivo.</li>
+                        <li>Seus pets cadastrados para doação serão inativados para não ficarem disponíveis sem tutor.</li>
+                        <li>Registros de doações e denúncias serão anonimizados para fins contábeis e de segurança animal.</li>
+                        <li>Históricos de conversas privadas serão removidos da sua conta.</li>
+                    </ul>
+                </div>
+
+                <form id="formConfirmarExclusao">
+                    <div class="form-group" style="text-align: left; margin-bottom: 1rem;">
+                        <label for="senhaConfirmacaoExclusao" style="font-weight: 700;">Confirme sua Senha Atual *</label>
+                        <div class="password-field-wrapper">
+                            <input type="password" id="senhaConfirmacaoExclusao" required placeholder="Digite sua senha para confirmar sua identidade">
+                            <button type="button" class="btn-toggle-pass" data-target="senhaConfirmacaoExclusao" aria-label="Mostrar ou ocultar senha">👁️</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="text-align: left; margin-bottom: 1.2rem;">
+                        <label for="textoConfirmacaoExclusao" style="font-weight: 700;">Digite a palavra <strong>EXCLUIR</strong> para confirmar *</label>
+                        <input type="text" id="textoConfirmacaoExclusao" required placeholder="EXCLUIR" autocomplete="off">
+                    </div>
+
+                    <div style="text-align: left; margin-bottom: 1.5rem;">
+                        <label style="display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.88rem; cursor: pointer;">
+                            <input type="checkbox" id="checkTermoExclusao" required style="margin-top: 3px;">
+                            <span>Estou ciente de que todos os meus acessos e pets vinculados serão inativados e esta ação não poderá ser desfeita.</span>
+                        </label>
+                    </div>
+
+                    <div class="modal-buttons-grid">
+                        <button type="button" class="secondary-btn" id="btnCancelarExclusao">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="danger-btn" id="btnExecutarExclusao">
+                            Excluir minha conta definitivamente
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL 3: PRÉ-VISUALIZAÇÃO E CONFIRMAÇÃO DA NOVA FOTO DE PERFIL -->
+        <div id="modalAlterarFotoPerfil" class="modal-overlay" style="display: none;">
+            <div class="modal-card" style="max-width: 440px; text-align: center;">
+                <div class="modal-icon-badge" style="background: #fff0ea; color: var(--primary);">
+                    📷
+                </div>
+                <h2>Atualizar Foto de Perfil</h2>
+                <p style="color: var(--muted); font-size: 0.92rem; margin-bottom: 1.2rem;">
+                    Confira a prévia da sua nova foto de perfil abaixo antes de salvar.
+                </p>
+
+                <div style="width: 140px; height: 140px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem auto; border: 4px solid var(--primary-soft); box-shadow: var(--shadow);">
+                    <img id="previewNovaFotoPerfil" src="" alt="Prévia da foto" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
+                <div id="msgErroFotoPerfil" style="display:none; color: #b91c1c; background: #fee2e2; border: 1px solid #f87171; padding: 0.65rem 0.9rem; border-radius: 10px; font-size: 0.88rem; font-weight: 700; margin-bottom: 1rem;"></div>
+
+                <div class="modal-buttons-grid">
+                    <button type="button" class="secondary-btn" id="btnCancelarTrocaFoto">
+                        Cancelar
+                    </button>
+                    <button type="button" class="primary-btn" id="btnConfirmarSalvarFoto">
+                        💾 Salvar Foto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+
+    <script src="../auth-ui.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

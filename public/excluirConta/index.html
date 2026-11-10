@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Excluir Minha Conta</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../perfil/style.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../chatDoador/index.html">Chat doador</a>
+            <a href="../perfil/index.html">Meu Perfil</a>
+        </nav>
+    </header>
+
+    <main class="perfil-main" style="max-width: 620px;">
+        <section class="perfil-card modal-card-danger" style="margin-top: 1.5rem;">
+            <div class="modal-icon-badge" style="background: #fee2e2; color: #b91c1c;">
+                ⚠️
+            </div>
+            <h1 style="color: #991b1b; font-size: 1.7rem; font-weight: 800; margin-bottom: 0.5rem; text-align: center;">
+                Excluir Minha Conta
+            </h1>
+            <p style="color: var(--muted); text-align: center; margin-bottom: 1.5rem; font-size: 0.95rem;">
+                Área de segurança para encerramento permanente da conta no PetAlert.
+            </p>
+
+            <div class="exclusao-termos-box">
+                <p><strong>Atenção:</strong> Esta ação é <strong>definitiva e irreversível</strong>:</p>
+                <ul>
+                    <li>Seu acesso ao PetAlert será cancelado imediatamente.</li>
+                    <li>Animais que você colocou para adoção serão inativados para proteção do pet.</li>
+                    <li>Registros de doações e denúncias serão anonimizados para fins legais e contábeis.</li>
+                    <li>Históricos de conversas privadas serão desvinculados da sua conta.</li>
+                </ul>
+            </div>
+
+            <form id="formExcluirContaDireto">
+                <div class="form-group" style="text-align: left; margin-bottom: 1.2rem;">
+                    <label for="senhaAtualExclusao" style="font-weight: 700;">Confirme sua Senha Atual *</label>
+                    <div class="password-field-wrapper">
+                        <input type="password" id="senhaAtualExclusao" required placeholder="Digite sua senha atual">
+                        <button type="button" class="btn-toggle-pass" data-target="senhaAtualExclusao" aria-label="Mostrar ou ocultar senha">👁️</button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="text-align: left; margin-bottom: 1.2rem;">
+                    <label for="textoConfirmacao" style="font-weight: 700;">Digite <strong>EXCLUIR</strong> para confirmar *</label>
+                    <input type="text" id="textoConfirmacao" required placeholder="EXCLUIR" autocomplete="off">
+                </div>
+
+                <div style="text-align: left; margin-bottom: 1.6rem;">
+                    <label style="display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.88rem; cursor: pointer;">
+                        <input type="checkbox" id="checkTermo" required style="margin-top: 3px;">
+                        <span>Estou ciente e confirmo a exclusão definitiva da minha conta e inativação de dados vinculados.</span>
+                    </label>
+                </div>
+
+                <div style="display: flex; gap: 0.85rem; flex-wrap: wrap;">
+                    <a href="../perfil/index.html" class="secondary-btn" style="flex: 1; text-align: center; text-decoration: none; padding: 0.9rem;">
+                        Cancelar e voltar
+                    </a>
+                    <button type="submit" class="danger-btn" id="btnConfirmarExclusaoDireto" style="flex: 1; padding: 0.9rem;">
+                        Confirmar Exclusão
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+
+    <script src="../auth-ui.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

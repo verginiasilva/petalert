@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidade — PetAlert</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .privacy-wrap {
+            max-width: 900px;
+            margin: 2rem auto 4rem;
+            padding: 0 1.2rem;
+        }
+
+        .privacy-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .privacy-header {
+            border-bottom: 2px solid #FFF1B8;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .privacy-header h1 {
+            color: var(--primary-dark);
+            margin: 0 0 0.5rem;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .privacy-badge {
+            display: inline-block;
+            background: #FFF9E6;
+            color: #B45309;
+            border: 1px solid #FDE68A;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .privacy-date {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        .privacy-toc {
+            background: #FFFDF5;
+            border: 1px solid #FDE68A;
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .privacy-toc h3 {
+            margin: 0 0 0.8rem;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .privacy-toc ul {
+            margin: 0;
+            padding-left: 1.4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.4rem;
+        }
+
+        .privacy-toc a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.92rem;
+            transition: color 0.2s;
+        }
+
+        .privacy-toc a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .privacy-section {
+            margin-bottom: 2.2rem;
+        }
+
+        .privacy-section h2 {
+            color: var(--primary-dark);
+            font-size: 1.35rem;
+            margin: 0 0 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .privacy-section p {
+            line-height: 1.7;
+            color: #374151;
+            margin: 0 0 0.9rem;
+            font-size: 1rem;
+        }
+
+        .privacy-section ul {
+            margin: 0 0 1rem;
+            padding-left: 1.3rem;
+            line-height: 1.65;
+            color: #374151;
+        }
+
+        .privacy-section strong {
+            color: #111827;
+        }
+
+        .privacy-highlight-box {
+            background: #FEF2F2;
+            border-left: 4px solid #F87171;
+            padding: 1rem 1.25rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            color: #991B1B;
+        }
+
+        .privacy-info-box {
+            background: #EFF6FF;
+            border-left: 4px solid #60A5FA;
+            padding: 1rem 1.25rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            color: #1E40AF;
+        }
+
+        .privacy-actions {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .privacy-card {
+                padding: 1.5rem;
+            }
+            .privacy-header h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncia</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+            <a href="../login/index.html" class="nav-entrar-btn" id="navLoginLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main class="privacy-wrap">
+        <article class="privacy-card">
+            <div class="privacy-header">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.4rem; flex-wrap: wrap;">
+                    <span class="privacy-badge">LGPD – Lei nº 13.709/2018</span>
+                    <span class="privacy-badge" style="background:#EEF2FF; color:#4338CA; border-color:#C7D2FE;">Transparência & Proteção</span>
+                </div>
+                <h1>🔒 Política de Privacidade – PetAlert</h1>
+                <div class="privacy-date">Última atualização: <strong>10 de novembro de 2026</strong></div>
+            </div>
+
+            <nav class="privacy-toc" aria-label="Sumário da Política">
+                <h3>📌 Tópicos da Política</h3>
+                <ul>
+                    <li><a href="#apresentacao">1. Apresentação</a></li>
+                    <li><a href="#coleta">2. Informações Coletadas</a></li>
+                    <li><a href="#finalidade">3. Finalidade do Tratamento</a></li>
+                    <li><a href="#visualizacao">4. Quem Visualiza os Dados</a></li>
+                    <li><a href="#armazenamento">5. Armazenamento e Segurança</a></li>
+                    <li><a href="#compartilhamento">6. Compartilhamento</a></li>
+                    <li><a href="#cpf-idade">7. CPF e Data de Nascimento</a></li>
+                    <li><a href="#localizacao">8. Dados de Localização</a></li>
+                    <li><a href="#ia">9. Inteligência Artificial (Pet.IA)</a></li>
+                    <li><a href="#conversas">10. Conversas e Denúncias</a></li>
+                    <li><a href="#direitos">11. Direitos dos Usuários</a></li>
+                    <li><a href="#retencao">12. Retenção e Exclusão</a></li>
+                    <li><a href="#menores">13. Proteção de Menores</a></li>
+                    <li><a href="#alteracoes">14. Alterações nesta Política</a></li>
+                    <li><a href="#contato">15. Contato e Solicitações</a></li>
+                </ul>
+            </nav>
+
+            <section class="privacy-section" id="apresentacao">
+                <h2>1. Apresentação</h2>
+                <p>A presente Política de Privacidade explica como o PetAlert coleta, utiliza, armazena e protege os dados pessoais dos usuários durante a utilização da plataforma.</p>
+                <p>O tratamento das informações respeita integralmente a <strong>Lei Geral de Proteção de Dados Pessoais (LGPD – Lei nº 13.709/2018)</strong>, pautando-se nos princípios de finalidade, adequação, necessidade, livre acesso, qualidade dos dados, transparência, segurança, prevenção, não discriminação, responsabilização e prestação de contas.</p>
+            </section>
+
+            <section class="privacy-section" id="coleta">
+                <h2>2. Quais informações coletamos?</h2>
+                <p>Durante o cadastro e a utilização do PetAlert, poderão ser coletadas as seguintes informações:</p>
+                
+                <p><strong>Dados de identificação:</strong></p>
+                <ul>
+                    <li>Nome completo;</li>
+                    <li>CPF (Cadastro de Pessoas Físicas);</li>
+                    <li>Data de nascimento;</li>
+                    <li>Foto de perfil, quando fornecida voluntariamente.</li>
+                </ul>
+
+                <p><strong>Dados de contato:</strong></p>
+                <ul>
+                    <li>Endereço de e-mail;</li>
+                    <li>Número de telefone / WhatsApp.</li>
+                </ul>
+
+                <p><strong>Dados de localização:</strong></p>
+                <ul>
+                    <li>CEP;</li>
+                    <li>Rua / Logradouro;</li>
+                    <li>Número residencial;</li>
+                    <li>Bairro;</li>
+                    <li>Cidade;</li>
+                    <li>Estado (UF).</li>
+                </ul>
+
+                <p><strong>Dados de acesso:</strong></p>
+                <ul>
+                    <li>Senha de acesso (armazenada exclusivamente em formato criptográfico irreversível bcrypt);</li>
+                    <li>Informações necessárias à autenticação e controle de sessões da conta.</li>
+                </ul>
+
+                <p><strong>Informações relacionadas aos animais:</strong></p>
+                <ul>
+                    <li>Nome do animal;</li>
+                    <li>Espécie (cão, gato ou outro);</li>
+                    <li>Raça;</li>
+                    <li>Idade;</li>
+                    <li>Porte;</li>
+                    <li>Peso e cor;</li>
+                    <li>Histórico e motivo da disponibilização para adoção;</li>
+                    <li>Fotografias e demais informações fornecidas pelo usuário.</li>
+                </ul>
+
+                <p>Também poderão ser armazenadas informações relacionadas às conversas (chat entre doador e adotante), denúncias e interações realizadas na plataforma, conforme as funcionalidades utilizadas.</p>
+            </section>
+
+            <section class="privacy-section" id="finalidade">
+                <h2>3. Para que utilizamos os dados?</h2>
+                <p>As informações coletadas são utilizadas estritamente para finalidades legítimas:</p>
+                <ul>
+                    <li>Criar e identificar contas de usuários de maneira única e inequívoca;</li>
+                    <li>Verificar os requisitos de idade mínima para cadastro (16 anos);</li>
+                    <li>Realizar autenticação segura e fluxo de recuperação de senha;</li>
+                    <li>Evitar cadastros fraudulentos e duplicados na plataforma;</li>
+                    <li>Permitir o funcionamento regular das funcionalidades da plataforma;</li>
+                    <li>Identificar a região dos usuários e apresentar animais relacionados à localização cadastrada;</li>
+                    <li>Facilitar a comunicação entre doadores e adotantes;</li>
+                    <li>Permitir o registro e a análise de denúncias de maus-tratos e irregularidades;</li>
+                    <li>Oferecer suporte e atendimento à comunidade;</li>
+                    <li>Garantir a segurança e a administração do PetAlert.</li>
+                </ul>
+                <div class="privacy-info-box">
+                    Cada finalidade possui uma hipótese legal adequada conforme a LGPD, principalmente para a execução de contrato ou procedimentos preliminares, cumprimento de obrigação legal ou regulatória, legítimo interesse e consentimento.
+                </div>
+            </section>
+
+            <section class="privacy-section" id="visualizacao">
+                <h2>4. Quem pode visualizar os dados pessoais?</h2>
+                <p>Os dados pessoais fornecidos durante o cadastro, incluindo CPF, endereço completo, telefone e data de nascimento, são destinados ao acesso administrativo da plataforma, conforme as permissões de cada função.</p>
+                <div class="privacy-highlight-box">
+                    <strong>Privacidade garantida:</strong> Essas informações sensíveis não são exibidas publicamente nem disponibilizadas integralmente para outros usuários comuns.
+                </div>
+                <p>Os usuários poderão visualizar apenas as informações estritamente necessárias à utilização das funcionalidades, como dados públicos dos animais anunciados e informações de contato que o próprio responsável decidir compartilhar.</p>
+                <p>Os administradores autorizados acessam somente as informações indispensáveis ao exercício de suas atribuições de gestão, mediação e segurança da comunidade.</p>
+            </section>
+
+            <section class="privacy-section" id="armazenamento">
+                <h2>5. Armazenamento das informações</h2>
+                <p>Os dados dos usuários são armazenados de forma estruturada no banco de dados MySQL utilizado pelo PetAlert.</p>
+                <p>A plataforma utiliza sua estrutura de banco de dados para registrar informações de cadastro, animais, denúncias e demais funcionalidades.</p>
+                <p><strong>As senhas são armazenadas utilizando mecanismos seguros de hash (Bcrypt padrão PHP), nunca em texto puro.</strong></p>
+                <p>O PetAlert adota medidas técnicas e organizacionais adequadas para proteger as informações contra acessos não autorizados, vazamentos, perda, alteração ou utilização indevida.</p>
+            </section>
+
+            <section class="privacy-section" id="compartilhamento">
+                <h2>6. Compartilhamento de informações</h2>
+                <p><strong>Os dados pessoais dos usuários jamais são comercializados ou cedidos para fins publicitários de terceiros.</strong></p>
+                <p>O compartilhamento somente ocorre quando estritamente necessário para o funcionamento dos serviços, mediante autorização ou quando existir outra hipótese legal aplicável, incluindo cumprimento de obrigações legais e atendimento a ordens legítimas de autoridades competentes.</p>
+                <p>Quando houver utilização de serviços externos, como ferramentas de envio de e-mails ou inteligência artificial, o PetAlert avalia quais informações são transmitidas e adota as medidas de proteção adequadas para limitar o tráfego ao mínimo necessário.</p>
+            </section>
+
+            <section class="privacy-section" id="cpf-idade">
+                <h2>7. Utilização de CPF e data de nascimento</h2>
+                <p>O CPF é solicitado durante o cadastro como dado de identificação do usuário e para evitar duplicidade de contas e fraudes. A data de nascimento é utilizada para verificar o requisito mínimo de idade estabelecido pela plataforma (16 anos).</p>
+                <p>Essas informações são de caráter pessoal e recebem proteção rigorosa de controle de acesso.</p>
+                <p>O acesso é restrito aos administradores autorizados, e sua utilização respeita estritamente as finalidades informadas e as bases legais aplicáveis.</p>
+            </section>
+
+            <section class="privacy-section" id="localizacao">
+                <h2>8. Dados de localização</h2>
+                <p>O CEP e o endereço completo são solicitados para identificar a localização cadastrada pelo usuário e auxiliar na apresentação de animais disponíveis para adoção em sua região, bem como clínicas veterinárias próximas.</p>
+                <p><strong>O endereço residencial completo (rua, número e complemento) nunca é exibido publicamente para outros usuários.</strong> Apenas a cidade e o estado poderão ser indicados publicamente para identificar a região do pet anunciado.</p>
+            </section>
+
+            <section class="privacy-section" id="ia">
+                <h2>9. Inteligência Artificial – Pet.IA</h2>
+                <p>A plataforma disponibiliza uma ferramenta de inteligência artificial para fornecer informações e orientações gerais relacionadas aos cuidados, saúde e bem-estar dos animais.</p>
+                <div class="privacy-info-box">
+                    <strong>Minimização de dados:</strong> No envio de consultas a serviços externos de inteligência artificial, o PetAlert limita os dados transmitidos ao necessário para responder à dúvida sobre o pet, evitando terminantemente o envio de CPF, endereço completo, senhas ou outros dados pessoais cadastrais dos usuários.
+                </div>
+            </section>
+
+            <section class="privacy-section" id="conversas">
+                <h2>10. Conversas e denúncias</h2>
+                <p>As informações registradas no Chat com Doador e no sistema de denúncias são armazenadas no banco de dados para possibilitar o funcionamento, a segurança, o cumprimento de termos de uso e a administração da plataforma.</p>
+                <p>O acesso pelos administradores respeita as permissões estabelecidas e as finalidades legítimas do tratamento (ex.: mediação de conflitos, apuração de maus-tratos ou descumprimento das diretrizes).</p>
+            </section>
+
+            <section class="privacy-section" id="direitos">
+                <h2>11. Direitos dos usuários</h2>
+                <p>Em conformidade com o artigo 18 da LGPD, os titulares de dados pessoais podem solicitar a qualquer momento:</p>
+                <ul>
+                    <li>Confirmação da existência de tratamento de dados;</li>
+                    <li>Acesso às suas informações pessoais armazenadas;</li>
+                    <li>Correção de dados incompletos, inexatos ou desatualizados;</li>
+                    <li>Anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade com a legislação;</li>
+                    <li>Portabilidade dos dados a outro fornecedor de serviço, quando aplicável;</li>
+                    <li>Informações sobre as entidades públicas e privadas com as quais houve compartilhamento;</li>
+                    <li>Revogação do consentimento, quando essa for a base legal adotada;</li>
+                    <li>Eliminação de dados tratados com base em consentimento, ressalvadas as hipóteses legais de conservação previstas no artigo 16 da LGPD.</li>
+                </ul>
+                <p>As solicitações podem ser encaminhadas pelos canais oficiais de atendimento do PetAlert.</p>
+            </section>
+
+            <section class="privacy-section" id="retencao">
+                <h2>12. Retenção e exclusão dos dados</h2>
+                <p>Os dados pessoais serão mantidos pelo período estritamente necessário para cumprir as finalidades do tratamento ou cumprir obrigações legais e regulatórias (como prazos do Marco Civil da Internet – Lei nº 12.965/2014).</p>
+                <p>A exclusão de uma conta não significa necessariamente a eliminação imediata de todas as informações, pois determinados registros poderão precisar ser conservados nas hipóteses expressamente previstas em lei.</p>
+                <p>Quando esgotadas as finalidades e os prazos legais, os dados são eliminados com segurança ou anonimizados irreversivelmente.</p>
+            </section>
+
+            <section class="privacy-section" id="menores">
+                <h2>13. Proteção de menores de idade</h2>
+                <p>O PetAlert estabelece idade mínima de <strong>16 anos</strong> para cadastro na plataforma.</p>
+                <p>O tratamento de dados pessoais de adolescentes observa sempre o melhor interesse do adolescente, as disposições da LGPD e as normas do Estatuto da Criança e do Adolescente (ECA – Lei nº 8.069/1990).</p>
+            </section>
+
+            <section class="privacy-section" id="alteracoes">
+                <h2>14. Alterações nesta política</h2>
+                <p>Esta Política de Privacidade poderá ser atualizada periodicamente para refletir mudanças na plataforma, na legislação aplicável ou em nossas práticas de tratamento de dados.</p>
+                <p>Alterações relevantes serão comunicadas aos usuários através dos canais disponíveis na plataforma, com a indicação da nova data de revisão.</p>
+            </section>
+
+            <section class="privacy-section" id="contato">
+                <h2>15. Contato e solicitações</h2>
+                <p>Para dúvidas, esclarecimentos, sugestões ou para o exercício dos seus direitos como titular de dados pessoais, utilize o canal oficial de atendimento do PetAlert.</p>
+                <div class="privacy-info-box">
+                    <strong>Declaração de ciência:</strong> Ao aceitar esta Política de Privacidade, o usuário declara que recebeu informações claras sobre o tratamento de seus dados pessoais, sem que isso represente consentimento genérico para todas as atividades de tratamento.
+                </div>
+            </section>
+
+            <div class="privacy-actions">
+                <a href="../inicio/index.html" class="secondary-btn">← Voltar ao Início</a>
+                <a href="../cadastro/index.html" class="primary-btn">Ir para o Cadastro</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais. <a href="index.html" style="color:var(--primary-dark); text-decoration:underline; font-weight:600; margin-left:8px;">Política de Privacidade</a></p>
+    </footer>
+
+    <script src="../auth-ui.js"></script>
+</body>
+
+</html>

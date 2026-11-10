@@ -1,0 +1,10 @@
+{
+    "name": "petalert/backend",
+    "description": "PetAlert - Plataforma de Proteção & Adoção de Animais",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "config": {
+        "vendor-dir": "vendor"
+    }
+}

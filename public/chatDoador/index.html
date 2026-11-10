@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Chat com doador</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        :root {
+            --chat-bg: #fffaf7;
+            --chat-panel: #ffffff;
+            --incoming: #ffffff;
+            --outgoing: #fff0ea;
+            --bubble-border: #f7d8c5;
+            --text-soft: #6b7280;
+            --pet-pill: #fff8ef;
+            --online: #66a97f;
+            --header-shadow: 0 12px 30px rgba(90, 67, 58, 0.08);
+        }
+
+        body {
+            background: linear-gradient(180deg, #fffaf7 0%, #fffdfb 100%);
+        }
+
+        .chat-shell {
+            width: min(980px, calc(100% - 1.5rem));
+            margin: 1.4rem auto 2.5rem;
+            background: var(--chat-panel);
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            box-shadow: var(--header-shadow);
+            overflow: hidden;
+        }
+
+        .chat-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: linear-gradient(135deg, rgba(255, 240, 234, 0.8), rgba(255,255,255,1));
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            cursor: pointer;
+        }
+
+        .chat-title {
+            font-size: clamp(1.3rem, 2vw, 2rem);
+            font-weight: 800;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .chat-profile {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.2rem 1.25rem;
+            background: linear-gradient(135deg, #fffaf5, #fff 65%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-user {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+        }
+
+        .avatar {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f6c08c, #f59f77);
+            color: #fff;
+            box-shadow: 0 12px 24px rgba(245, 159, 119, 0.2);
+            font-size: 1.15rem;
+        }
+
+        .profile-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.18rem;
+        }
+
+        .profile-meta strong {
+            font-size: 1.05rem;
+            color: var(--text);
+        }
+
+        .profile-meta small {
+            color: var(--text-soft);
+        }
+
+        .online-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--online);
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .online-indicator::before {
+            content: "";
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--online);
+            display: inline-block;
+        }
+
+        .pet-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--pet-pill), #fff4d8);
+            border: 1px solid #f9d9ae;
+            color: var(--primary-dark);
+            border-radius: 999px;
+            padding: 0.6rem 0.9rem;
+            font-weight: 800;
+        }
+
+        .chat-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.2rem 1rem 1rem;
+            background: linear-gradient(180deg, #fffaf7 0%, #fffdfb 100%);
+            min-height: 420px;
+            max-height: 560px;
+            overflow-y: auto;
+        }
+
+        .message-row {
+            display: flex;
+            width: 100%;
+        }
+
+        .message-row.outgoing {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: min(78%, 540px);
+            border-radius: 20px;
+            padding: 0.9rem 1rem;
+            box-shadow: 0 8px 20px rgba(92, 67, 58, 0.04);
+            border: 1px solid var(--border);
+            line-height: 1.55;
+            font-size: 0.96rem;
+        }
+
+        .message-row.incoming .message-bubble {
+            background: var(--incoming);
+            border-bottom-left-radius: 8px;
+        }
+
+        .message-row.outgoing .message-bubble {
+            background: linear-gradient(135deg, #fff0ea, #fff9f4);
+            border-bottom-right-radius: 8px;
+            border-color: var(--bubble-border);
+        }
+
+        .message-author {
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 0.35rem;
+            color: var(--primary-dark);
+        }
+
+        .message-row.outgoing .message-author {
+            text-align: right;
+        }
+
+        .message-time {
+            display: block;
+            margin-top: 0.45rem;
+            font-size: 0.7rem;
+            color: var(--text-soft);
+        }
+
+        .composer {
+            display: flex;
+            gap: 0.85rem;
+            align-items: center;
+            padding: 1rem 1.1rem 1.25rem;
+            background: #fff;
+            border-top: 1px solid var(--border);
+        }
+
+        .composer input {
+            flex: 1;
+            min-width: 0;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #fffdfb;
+            padding: 0.95rem 1rem;
+            font-size: 0.98rem;
+            transition: all 0.2s ease;
+        }
+
+        .composer input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(246, 167, 128, 0.12);
+            outline: none;
+        }
+
+        .chat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+            padding: 1.25rem;
+            background: linear-gradient(180deg, #fffaf7, #fffdfb);
+        }
+
+        .conversation-item {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0.9rem 1rem;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .conversation-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(92, 67, 58, 0.05);
+        }
+
+        .conversation-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f5c28d, #f59f77);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            box-shadow: 0 10px 18px rgba(245,159,119,0.18);
+        }
+
+        .conversation-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.8rem;
+            align-items: center;
+            margin-bottom: 0.2rem;
+        }
+
+        .conversation-name {
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .conversation-meta {
+            color: var(--text-soft);
+            font-size: 0.76rem;
+        }
+
+        .conversation-preview {
+            color: var(--text-soft);
+            font-size: 0.88rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .compose-btn {
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 0.9rem 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 10px 18px rgba(244,124,32,0.2);
+        }
+
+        @media (max-width: 720px) {
+            .chat-profile {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .message-bubble {
+                max-width: 88%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="chat-shell" aria-label="Chat com doador">
+            <div class="chat-header-bar">
+                <div class="chat-header-left">
+                    <a href="../pets/index.html" class="back-link" aria-label="Voltar para a página de pets">← Voltar</a>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:center; gap:0.25rem;">
+                    <h1 class="chat-title" id="chatTituloPrincipal">💬 Chat com doador</h1>
+                    <div id="badgeSimulacao" style="background: #fff0ea; border: 1px solid #fed7aa; color: #c2410c; padding: 3px 10px; border-radius: 999px; font-size: 0.76rem; font-weight: 700;">
+                        IA do PetAlert — conversa simulada com o doador
+                    </div>
+                </div>
+                <div>
+                    <button type="button" id="btnAlternarModo" class="secondary-btn" style="font-size:0.78rem; padding:0.45rem 0.85rem; border-radius:999px;">
+                        Alternar para Modo Adotante
+                    </button>
+                </div>
+            </div>
+
+            <div id="chatList" class="chat-list hidden" aria-live="polite"></div>
+
+            <div id="chatPanel">
+                <div class="chat-profile">
+                    <div class="profile-user">
+                        <div id="doadorAvatar" class="avatar">D</div>
+                        <div class="profile-meta">
+                            <strong id="doadorNome">Carregando dados do pet...</strong>
+                            <small id="doadorCargo">Tutor(a) responsável</small>
+                            <span id="doadorStatus" class="online-indicator">Online</span>
+                        </div>
+                    </div>
+
+                    <div id="petPill" class="pet-tag">🐾 Pet</div>
+                </div>
+
+                <div id="chatMessages" class="chat-body" aria-live="polite">
+                    <!-- Mensagens carregadas dinamicamente via script.js -->
+                </div>
+
+                <div class="composer">
+                    <input id="chatInput" type="text" placeholder="Digite sua mensagem..." maxlength="500">
+                    <button id="sendButton" class="compose-btn" type="button">Enviar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal de Autenticação Necessária para Chat-Doador (Requisito 32) -->
+        <div id="modalAuthChat" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(4px);">
+            <div class="modal-content" style="background:#fff; border-radius:26px; max-width:480px; width:100%; padding:2.4rem 2rem; box-shadow:0 24px 48px rgba(90,67,58,0.25); text-align:center; border:1px solid var(--border);">
+                <div style="width:70px; height:70px; border-radius:50%; background:#fff0ea; color:var(--primary); font-size:2.3rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1.3rem auto; border:2px solid #fed7aa; box-shadow:0 8px 16px rgba(244,124,32,0.15);">
+                    🔒
+                </div>
+                <h2 style="font-size:1.5rem; font-weight:800; color:var(--text); margin-bottom:0.75rem;">Acesso ao Chat com Doador</h2>
+                <p id="msgAuthChat" style="font-size:1.08rem; font-weight:700; color:var(--text); margin-bottom:0.6rem; line-height:1.45;">
+                    Para conversar com o doador, você precisa entrar na sua conta ou criar uma conta no PetAlert.
+                </p>
+                <p style="font-size:0.92rem; color:var(--muted); margin-bottom:1.8rem; line-height:1.5;">
+                    Entre na sua conta ou faça um cadastro rápido para conversar com o tutor responsável por este animal.
+                </p>
+                <div style="display:flex; flex-direction:column; gap:0.85rem;">
+                    <a id="btnChatEntrar" href="../login/index.html" class="primary-btn" style="text-align:center; font-size:1rem; padding:0.9rem; font-weight:800; text-decoration:none; display:block;">
+                        Entrar
+                    </a>
+                    <a id="btnChatCriarConta" href="../cadastro/index.html" class="secondary-btn" style="text-align:center; font-size:1rem; padding:0.9rem; font-weight:800; text-decoration:none; display:block;">
+                        Criar conta
+                    </a>
+                    <a href="../pets/index.html" style="color:var(--muted); text-decoration:none; padding:0.5rem; font-weight:600; font-size:0.92rem; display:inline-block;">
+                        ← Voltar para a lista de pets
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+
+    <script src="../auth-ui.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

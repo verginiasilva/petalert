@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Redefinir senha</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .redefinir-card-shell {
+            max-width: 480px;
+            margin: 2.5rem auto;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 2.4rem 2.2rem;
+        }
+
+        .redefinir-header-icon {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 1.25rem;
+            background: linear-gradient(135deg, var(--yellow), var(--rose));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 6px 18px rgba(217, 125, 82, 0.2);
+        }
+
+        .password-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrap input {
+            width: 100%;
+            padding-right: 2.8rem;
+            box-sizing: border-box;
+        }
+
+        .btn-toggle-senha {
+            position: absolute;
+            right: 0.75rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.15rem;
+            padding: 0.25rem;
+            color: var(--muted);
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .alert-box {
+            padding: 0.95rem 1.15rem;
+            border-radius: 14px;
+            margin-bottom: 1.5rem;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            display: none;
+            align-items: center;
+            gap: 0.65rem;
+        }
+
+        .alert-box.sucesso {
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            color: #065F46;
+        }
+
+        .alert-box.erro {
+            background: #FEE2E2;
+            border: 1px solid #FCA5A5;
+            color: #991B1B;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        .nav-entrar-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+            color: #ffffff !important;
+            padding: 0.6rem 1.1rem !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 12px rgba(217, 125, 82, 0.2) !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+            <a href="../login/index.html" class="nav-entrar-btn">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-shell">
+            <div class="redefinir-card-shell">
+                <div style="text-align: center; margin-bottom: 1.75rem;">
+                    <div class="redefinir-header-icon">🔒</div>
+                    <h1 style="font-size: 1.85rem; color: var(--text); margin: 0 0 0.5rem; font-weight: 800;">Redefinir senha</h1>
+                    <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.5; margin: 0;">
+                        Crie uma nova senha segura para acessar sua conta no PetAlert.
+                    </p>
+                </div>
+
+                <!-- Feedback dinâmico -->
+                <div id="mensagemFeedback" class="alert-box"></div>
+
+                <form id="formRedefinirSenha" novalidate>
+                    <!-- Campo Nova Senha -->
+                    <div class="form-group">
+                        <label for="novaSenha" style="font-weight: 600; color: var(--text);">Nova senha</label>
+                        <div class="password-wrap">
+                            <input type="password" id="novaSenha" placeholder="Mínimo de 6 caracteres" required autocomplete="new-password">
+                            <button type="button" class="btn-toggle-senha" id="toggleNovaSenha" title="Mostrar ou ocultar senha" aria-label="Mostrar ou ocultar senha">👁️</button>
+                        </div>
+                        <small style="color: var(--muted); font-size: 0.82rem; margin-top: 0.35rem; display: block;">
+                            Utilize pelo menos 6 caracteres para sua segurança.
+                        </small>
+                    </div>
+
+                    <!-- Campo Confirmar Senha -->
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label for="confirmarSenha" style="font-weight: 600; color: var(--text);">Confirmar nova senha</label>
+                        <div class="password-wrap">
+                            <input type="password" id="confirmarSenha" placeholder="Repita a nova senha" required autocomplete="new-password">
+                            <button type="button" class="btn-toggle-senha" id="toggleConfirmarSenha" title="Mostrar ou ocultar confirmação de senha" aria-label="Mostrar ou ocultar confirmação de senha">👁️</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="btnSalvarSenha" class="primary-btn" style="width: 100%; margin-top: 1.4rem; font-size: 1rem; padding: 0.9rem; font-weight: 700; border-radius: 14px;">
+                        Redefinir senha
+                    </button>
+
+                    <div style="border-top: 1px solid var(--border); margin: 1.6rem 0 1rem;"></div>
+
+                    <p style="text-align: center; font-size: 0.95rem; margin: 0;">
+                        Lembrou a senha anterior? <a href="../login/index.html" style="color: var(--primary-dark); font-weight: 700; text-decoration: none;">Voltar ao login</a>
+                    </p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+
+    <script src="../auth-ui.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+
+        const form = document.getElementById('formRedefinirSenha');
+        const novaSenhaInput = document.getElementById('novaSenha');
+        const confirmarSenhaInput = document.getElementById('confirmarSenha');
+        const btnSalvar = document.getElementById('btnSalvarSenha');
+        const mensagemFeedback = document.getElementById('mensagemFeedback');
+        const toggleNovaSenha = document.getElementById('toggleNovaSenha');
+        const toggleConfirmarSenha = document.getElementById('toggleConfirmarSenha');
+
+        // Alternância de visibilidade de senha
+        function alternarVisibilidade(input, botao) {
+            const ehPassword = input.type === 'password';
+            input.type = ehPassword ? 'text' : 'password';
+            botao.textContent = ehPassword ? '🙈' : '👁️';
+        }
+
+        if (toggleNovaSenha) {
+            toggleNovaSenha.addEventListener('click', () => alternarVisibilidade(novaSenhaInput, toggleNovaSenha));
+        }
+
+        if (toggleConfirmarSenha) {
+            toggleConfirmarSenha.addEventListener('click', () => alternarVisibilidade(confirmarSenhaInput, toggleConfirmarSenha));
+        }
+
+        function exibirMensagem(tipo, texto) {
+            mensagemFeedback.className = 'alert-box ' + tipo;
+            mensagemFeedback.style.display = 'flex';
+            mensagemFeedback.innerHTML = (tipo === 'sucesso' ? '<span>✅</span> ' : '<span>⚠️</span> ') + '<span>' + texto + '</span>';
+        }
+
+        // Validação inicial do token presente na URL
+        if (!token || token.trim() === '') {
+            exibirMensagem('erro', 'Token de recuperação não fornecido ou link incompleto. Solicite um novo link.');
+            btnSalvar.disabled = true;
+            novaSenhaInput.disabled = true;
+            confirmarSenhaInput.disabled = true;
+        }
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (!token) {
+                exibirMensagem('erro', 'Link de recuperação inválido ou ausente.');
+                return;
+            }
+
+            const novaSenha = novaSenhaInput.value.trim();
+            const confirmarSenha = confirmarSenhaInput.value.trim();
+
+            if (!novaSenha) {
+                exibirMensagem('erro', 'Por favor, informe a nova senha.');
+                novaSenhaInput.focus();
+                return;
+            }
+
+            if (novaSenha.length < 6) {
+                exibirMensagem('erro', 'A nova senha deve ter pelo menos 6 caracteres.');
+                novaSenhaInput.focus();
+                return;
+            }
+
+            if (novaSenha !== confirmarSenha) {
+                exibirMensagem('erro', 'As duas senhas não coincidem. Digite novamente.');
+                confirmarSenhaInput.focus();
+                return;
+            }
+
+            const textoOriginal = btnSalvar.textContent;
+            btnSalvar.disabled = true;
+            btnSalvar.textContent = 'Salvando nova senha...';
+            mensagemFeedback.style.display = 'none';
+
+            try {
+                const response = await fetch('../index.php?rota=auth&acao=redefinir-senha', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        token: token,
+                        senha: novaSenha,
+                        confirmarSenha: confirmarSenha
+                    })
+                });
+
+                const json = await response.json().catch(() => ({}));
+
+                if (response.ok) {
+                    exibirMensagem('sucesso', json.mensagem || 'Senha redefinida com sucesso! Redirecionando para o login...');
+                    novaSenhaInput.value = '';
+                    confirmarSenhaInput.value = '';
+                    setTimeout(() => {
+                        window.location.href = '../login/index.html';
+                    }, 2500);
+                } else {
+                    exibirMensagem('erro', json.mensagem || 'Não foi possível redefinir a senha com o link informado.');
+                    btnSalvar.disabled = false;
+                    btnSalvar.textContent = textoOriginal;
+                }
+            } catch (error) {
+                console.error(error);
+                exibirMensagem('erro', 'Falha de comunicação com o servidor. Tente novamente.');
+                btnSalvar.disabled = false;
+                btnSalvar.textContent = textoOriginal;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+/logs/
+/uploads/emails/
+/vendor/
+/revisao_arquivos/
+*.zip
+.DS_Store
+Thumbs.db

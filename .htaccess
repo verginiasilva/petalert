@@ -1,0 +1,31 @@
+# =========================================================
+# PetAlert - Configurações de Segurança e Produção Apache
+# =========================================================
+
+Options -Indexes
+ServerSignature Off
+
+# 1. Forçar HTTPS em Produção (se não for localhost)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP_HOST} !^localhost [NC]
+    RewriteCond %{HTTP_HOST} !^127\.0\.0\.1 [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# 2. Bloquear Acesso a Arquivos Sensíveis
+<FilesMatch "^\.env|\.git|\.sql$|composer\.(json|lock)$|database_.*\.sql$">
+    Require all denied
+</FilesMatch>
+
+# 3. Cabeçalhos de Segurança HTTP
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# 4. Codificação Padrão
+AddDefaultCharset UTF-8

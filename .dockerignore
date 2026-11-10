@@ -1,0 +1,6 @@
+.git
+.env
+petalert_production_dump.sql
+scratch
+.system_generated
+*.log

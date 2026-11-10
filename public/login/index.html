@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Entrar</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .login-card-shell {
+            max-width: 460px;
+            margin: 2rem auto;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            padding: 2.2rem 2rem;
+        }
+
+        .login-header-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--yellow), var(--rose));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 6px 16px rgba(217, 125, 82, 0.15);
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            animation: shake 0.3s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        .nav-entrar-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+            color: #ffffff !important;
+            padding: 0.6rem 1.1rem !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 12px rgba(217, 125, 82, 0.2) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+            <a href="../login/index.html" class="active nav-entrar-btn" id="navLoginLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="login-card-shell">
+            <div class="login-header-icon">🐾</div>
+            <h1 style="text-align: center; margin-bottom: 0.4rem; font-size: 1.7rem;">Entrar no PetAlert</h1>
+            <p style="color: var(--muted); text-align: center; margin-bottom: 1.6rem; font-size: 0.92rem;">
+                Acesse sua conta para cadastrar pets para doação, registrar ocorrências ou acompanhar seus processos de adoção.
+            </p>
+
+            <div id="mensagemErro" class="alert-error" role="alert">
+                <span>⚠️</span>
+                <span id="textoErro">Credenciais inválidas.</span>
+            </div>
+
+            <form id="loginForm" novalidate>
+                <div class="form-grid">
+                    <!-- Campo CPF ou E-mail -->
+                    <div class="form-group">
+                        <label for="identificador">Digite seu CPF ou e-mail</label>
+                        <input type="text" id="identificador" placeholder="Digite seu CPF ou e-mail" autocomplete="username" required>
+                        <small id="identificadorHelper" class="helper-text" style="color: var(--muted);">Informe seu CPF ou endereço de e-mail cadastrado.</small>
+                    </div>
+
+                    <!-- Campo Senha -->
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
+                        <div class="password-wrap">
+                            <input type="password" id="senha" placeholder="Digite sua senha" autocomplete="current-password" required>
+                            <button type="button" class="btn-toggle-senha" id="toggleSenha" title="Mostrar ou ocultar senha" aria-label="Mostrar ou ocultar senha">👁️</button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; margin-top: -0.25rem; margin-bottom: 0.85rem;">
+                        <a href="recuperar-senha.html" id="linkRecuperarSenha" style="color: var(--primary-dark); font-size: 0.88rem; font-weight: 600; text-decoration: none;">Esqueceu sua senha?</a>
+                    </div>
+
+                    <button type="submit" id="entrar" class="primary-btn" style="width: 100%; margin-top: 0.25rem; font-size: 1rem;">
+                        Entrar na Conta
+                    </button>
+
+                    <div style="border-top: 1px solid var(--border); margin: 1.5rem 0 0.8rem;"></div>
+
+                    <p style="text-align: center; font-size: 0.95rem; margin: 0;">
+                        Não tem uma conta? <a href="../cadastro/index.html" id="linkCadastro" style="color: var(--primary-dark); font-weight: 700;">Cadastre-se aqui</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+        <p style="margin-top:4px;"><a href="../politica-privacidade/index.html" style="color:var(--primary-dark); text-decoration:underline; font-weight:600;">Política de Privacidade (LGPD)</a></p>
+    </footer>
+
+    <script src="../auth-ui.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

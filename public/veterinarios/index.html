@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Clínicas Veterinárias</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .vet-search-box {
+            background: linear-gradient(135deg, #ffffff, var(--yellow-soft));
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto auto;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        @media (max-width: 820px) {
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .region-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--primary);
+            border-radius: 14px;
+            padding: 0.9rem 1.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+        }
+
+        .region-banner strong {
+            color: var(--primary-dark);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .veterinarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .clinic-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            min-height: 100%;
+        }
+
+        .clinic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 32px rgba(17, 24, 39, 0.1);
+            border-color: rgba(246, 167, 128, 0.4);
+        }
+
+        .clinic-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #f3f4f6;
+            overflow: hidden;
+        }
+
+        .clinic-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .clinic-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .clinic-location-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--border);
+            color: var(--primary-dark);
+            font-weight: 800;
+            font-size: 0.82rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .clinic-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 1.35rem;
+            flex: 1;
+        }
+
+        .clinic-content h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .clinic-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.92rem;
+            color: var(--muted);
+        }
+
+        .clinic-meta-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            line-height: 1.45;
+        }
+
+        .clinic-meta-item strong {
+            color: var(--text);
+            flex-shrink: 0;
+        }
+
+        .clinic-actions {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: auto;
+            padding-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .clinic-actions a,
+        .clinic-actions button {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.75rem 0.9rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            text-align: center;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mapa {
+            background: linear-gradient(135deg, var(--rose) 0%, var(--yellow) 100%);
+            color: var(--primary-dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-mapa:hover {
+            filter: brightness(1.02);
+            transform: translateY(-1px);
+        }
+
+        .btn-site {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-site:hover {
+            filter: brightness(1.03);
+            transform: translateY(-1px);
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            background: #ffffff;
+            border: 1px dashed var(--border);
+            border-radius: 18px;
+            padding: 3rem 1.5rem;
+            color: var(--muted);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html">Doar pet</a>
+            <a href="../veterinarios/index.html" class="active">Veterinário</a>
+            <a href="../login/index.html" id="navLoginLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-shell">
+            <div style="margin-bottom: 1.5rem;">
+                <h1>Clínicas e Hospitais Veterinários</h1>
+                <p style="color: var(--muted); margin: 0.3rem 0 0;">Encontre atendimento de confiança para o seu pet em diversas regiões do Brasil, com opção de plantão 24h, consultas e pronto-atendimento.</p>
+            </div>
+
+            <!-- Caixa de Pesquisa Nacional / Regional / CEP -->
+            <div class="vet-search-box">
+                <form id="vetSearchForm" onsubmit="event.preventDefault(); executarBusca();">
+                    <div class="search-grid">
+                        <div class="form-group" style="margin: 0;">
+                            <label for="termoInput" style="font-size: 0.88rem;">Pesquisar por CEP, Cidade ou Estabelecimento</label>
+                            <input type="text" id="termoInput" placeholder="Ex.: 19904-716, Ourinhos, São Paulo, Hospital...">
+                        </div>
+
+                        <div class="form-group" style="margin: 0;">
+                            <label for="estadoSelect" style="font-size: 0.88rem;">Estado (UF)</label>
+                            <select id="estadoSelect">
+                                <option value="">Todos os Estados</option>
+                                <option value="SP">São Paulo (SP)</option>
+                                <option value="RJ">Rio de Janeiro (RJ)</option>
+                                <option value="MG">Minas Gerais (MG)</option>
+                                <option value="PR">Paraná (PR)</option>
+                                <option value="RS">Rio Grande do Sul (RS)</option>
+                                <option value="BA">Bahia (BA)</option>
+                                <option value="DF">Distrito Federal (DF)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="primary-btn" id="btnPesquisar" style="margin-top: 1.55rem; padding: 0.9rem 1.4rem;">
+                            🔍 Pesquisar
+                        </button>
+
+                        <button type="button" class="secondary-btn" id="btnLimparFiltros" style="margin-top: 1.55rem; padding: 0.9rem 1.1rem;">
+                            Limpar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Faixa de Região / Usuário Autenticado -->
+            <div id="regionBanner" class="region-banner">
+                <div>
+                    <strong id="regionLabel">📍 Clínicas e hospitais veterinários cadastrados no Brasil</strong>
+                    <span id="totalClinicasBadge" style="font-size: 0.85rem; color: var(--muted); margin-left: 0.5rem;"></span>
+                    <div id="regionSublabel" style="font-size: 0.85rem; color: var(--muted); margin-top: 3px; display: none;"></div>
+                </div>
+                <div id="userCepWarning" style="display: none; color: #b45309; font-size: 0.85rem; font-weight: 600;">
+                    ⚠️ Complete seu CEP no perfil para ordenar automaticamente clínicas próximas.
+                </div>
+            </div>
+
+            <!-- Grade de Clínicas Veterinárias -->
+            <div id="veterinariosGrid" class="veterinarios-grid">
+                <!-- Inserido dinamicamente pelo JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+
+    <script src="../auth-ui.js"></script>
+    <script>
+        const endpoint = new URL('../index.php', window.location.href);
+        endpoint.searchParams.set('rota', 'veterinarios');
+
+        const termoInput = document.getElementById('termoInput');
+        const estadoSelect = document.getElementById('estadoSelect');
+        const btnPesquisar = document.getElementById('btnPesquisar');
+        const btnLimparFiltros = document.getElementById('btnLimparFiltros');
+        const regionLabel = document.getElementById('regionLabel');
+        const regionSublabel = document.getElementById('regionSublabel');
+        const totalClinicasBadge = document.getElementById('totalClinicasBadge');
+        const userCepWarning = document.getElementById('userCepWarning');
+        const grid = document.getElementById('veterinariosGrid');
+
+        let sequenciaRequisicao = 0;
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // Detecta se a entrada é um CEP (8 dígitos após remover pontuações e espaços)
+        function extrairCep(valor) {
+            if (!valor) return null;
+            const limpo = valor.replace(/\D/g, '');
+            if (limpo.length === 8) {
+                return limpo;
+            }
+            return null;
+        }
+
+        // Consulta de CEP independente via ViaCEP ou endpoint PetAlert (Requisito 1)
+        async function consultarLocalizacaoCep(cepLimpo) {
+            try {
+                // Tenta endpoint do backend do PetAlert
+                const urlBackend = new URL(endpoint.toString());
+                urlBackend.searchParams.set('acao', 'cep');
+                urlBackend.searchParams.set('cep', cepLimpo);
+
+                const res = await fetch(urlBackend.toString(), {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (res.ok) {
+                    const json = await res.json().catch(() => null);
+                    if (json && json.status === 'sucesso' && json.dados) {
+                        return json.dados;
+                    }
+                }
+
+                // Fallback direto no ViaCEP
+                const viaRes = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+                if (viaRes.ok) {
+                    const dados = await viaRes.json().catch(() => null);
+                    if (dados && !dados.erro) {
+                        return {
+                            cep: dados.cep || cepLimpo,
+                            cidade: dados.localidade || '',
+                            estado: dados.uf || '',
+                            uf: dados.uf || '',
+                            bairro: dados.bairro || '',
+                            logradouro: dados.logradouro || ''
+                        };
+                    }
+                }
+
+                return null;
+            } catch (err) {
+                console.error('Erro na consulta de CEP:', err);
+                return null;
+            }
+        }
+
+        // Orquestrador de busca
+        async function executarBusca() {
+            const rawTermo = termoInput.value.trim();
+            const estado = estadoSelect.value;
+            const cepLimpo = extrairCep(rawTermo);
+
+            // 1. Se for um CEP digitado
+            if (cepLimpo) {
+                btnPesquisar.disabled = true;
+                btnPesquisar.textContent = 'Identificando CEP...';
+                regionLabel.textContent = `📍 Consultando localização do CEP ${rawTermo}...`;
+                totalClinicasBadge.textContent = '';
+                if (regionSublabel) regionSublabel.style.display = 'none';
+
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🔎</div>
+                        <h3>Localizando região do CEP...</h3>
+                        <p>Identificando a cidade e o estado correspondentes na base oficial de endereços.</p>
+                    </div>
+                `;
+
+                const localizacao = await consultarLocalizacaoCep(cepLimpo);
+
+                if (!localizacao || !localizacao.cidade) {
+                    btnPesquisar.disabled = false;
+                    btnPesquisar.textContent = '🔍 Pesquisar';
+                    regionLabel.textContent = `⚠️ CEP não encontrado`;
+                    totalClinicasBadge.textContent = '(0 encontradas)';
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">⚠️</div>
+                            <h3>CEP "${escapeHtml(rawTermo)}" não encontrado</h3>
+                            <p>Não encontramos informações para este CEP na base dos Correios. Verifique os dígitos e tente novamente ou pesquise pelo nome da cidade.</p>
+                            <button type="button" class="primary-btn" onclick="limparFiltros()" style="margin-top: 1rem;">Ver todas as clínicas</button>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Preenche e sincroniza os campos de pesquisa
+                termoInput.value = localizacao.cidade;
+                if (localizacao.estado) {
+                    estadoSelect.value = localizacao.estado;
+                }
+
+                // Busca as clínicas na região identificada
+                await buscarClinicas({
+                    cidade: localizacao.cidade,
+                    estado: localizacao.estado,
+                    cep: cepLimpo,
+                    logradouro: localizacao.logradouro,
+                    bairro: localizacao.bairro,
+                    origemCep: true
+                });
+                return;
+            }
+
+            // 2. Se for nome de cidade, clínica ou busca geral
+            await buscarClinicas({
+                termo: rawTermo,
+                estado: estado
+            });
+        }
+
+        async function buscarClinicas(filtros = {}) {
+            const idRequisicao = ++sequenciaRequisicao;
+
+            btnPesquisar.disabled = true;
+            btnPesquisar.textContent = 'Buscando...';
+
+            const url = new URL(endpoint.toString());
+
+            if (filtros.cep) {
+                url.searchParams.set('cep', filtros.cep);
+            }
+            if (filtros.cidade) {
+                url.searchParams.set('cidade', filtros.cidade);
+            }
+            if (filtros.termo) {
+                url.searchParams.set('termo', filtros.termo);
+            }
+            if (filtros.estado) {
+                url.searchParams.set('estado', filtros.estado);
+            }
+
+            try {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⏳</div>
+                        <h3>Buscando clínicas veterinárias...</h3>
+                    </div>
+                `;
+
+                const response = await fetch(url.toString(), {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                // Ignora respostas obsoletas se outra requisição foi iniciada
+                if (idRequisicao !== sequenciaRequisicao) {
+                    return;
+                }
+
+                if (!response.ok || (data && data.status === 'erro')) {
+                    throw new Error(data?.mensagem || 'Falha ao carregar clínicas.');
+                }
+
+                renderizarClinicas(data, filtros);
+            } catch (error) {
+                if (idRequisicao !== sequenciaRequisicao) {
+                    return;
+                }
+                console.error(error);
+                regionLabel.textContent = '⚠️ Erro ao consultar clínicas';
+                totalClinicasBadge.textContent = '';
+                if (regionSublabel) regionSublabel.style.display = 'none';
+
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <h3>Erro ao carregar clínicas</h3>
+                        <p>${escapeHtml(error.message || 'Verifique sua conexão ou tente novamente em instantes.')}</p>
+                        <button type="button" class="primary-btn" onclick="limparFiltros()" style="margin-top: 1rem;">Restaurar todas as clínicas</button>
+                    </div>
+                `;
+            } finally {
+                if (idRequisicao === sequenciaRequisicao) {
+                    btnPesquisar.disabled = false;
+                    btnPesquisar.textContent = '🔍 Pesquisar';
+                }
+            }
+        }
+
+        function renderizarClinicas(data, filtrosUsados = {}) {
+            const clinicas = Array.isArray(data.dados) ? data.dados : [];
+            const regiao = data.regiao_usuario || {};
+            const tituloFinal = data.titulo || regiao.rotulo || 'Clínicas veterinárias disponíveis';
+
+            // Atualiza o banner de região de forma totalmente sincronizada
+            regionLabel.textContent = `📍 ${tituloFinal}`;
+            totalClinicasBadge.textContent = `(${clinicas.length} ${clinicas.length === 1 ? 'encontrada' : 'encontradas'})`;
+
+            // Subtítulo descritivo de logradouro/bairro (quando busca por CEP)
+            if (regionSublabel) {
+                const sub = data.subtitulo || (filtrosUsados.logradouro ? [filtrosUsados.logradouro, filtrosUsados.bairro].filter(Boolean).join(' - ') : '');
+                if (sub) {
+                    regionSublabel.textContent = `Referência: ${sub}`;
+                    regionSublabel.style.display = 'block';
+                } else {
+                    regionSublabel.style.display = 'none';
+                }
+            }
+
+            // Alerta se o usuário estiver logado mas sem CEP válido cadastrado
+            if (regiao.autenticado && !regiao.tem_cep) {
+                userCepWarning.style.display = 'block';
+            } else {
+                userCepWarning.style.display = 'none';
+            }
+
+            if (clinicas.length === 0) {
+                const termoPesquisado = filtrosUsados.cidade || filtrosUsados.termo || termoInput.value.trim() || '';
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🐾</div>
+                        <h3>Nenhum estabelecimento veterinário encontrado${termoPesquisado ? ` para "${escapeHtml(termoPesquisado)}"` : ''}</h3>
+                        <p>No momento o PetAlert ainda não possui clínicas parceiras cadastradas nesta localidade. Estamos expandindo nossa rede de atendimento para mais cidades do Brasil. Tente buscar em cidades próximas ou limpe os filtros para visualizar todas as clínicas.</p>
+                        <button type="button" class="primary-btn" onclick="limparFiltros()" style="margin-top: 1rem;">Ver todas as clínicas cadastradas</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = clinicas.map(c => {
+                const linkSite = c.site ? `<a class="btn-site" href="${escapeHtml(c.site)}" target="_blank" rel="noopener noreferrer">🌐 Acessar Site</a>` : '';
+                const linkMapa = `<a class="btn-mapa" href="${escapeHtml(c.mapa_url)}" target="_blank" rel="noopener noreferrer">📍 Ver no Mapa</a>`;
+
+                return `
+                    <article class="clinic-card">
+                        <div class="clinic-img-wrap">
+                            <img src="${escapeHtml(c.foto)}" alt="${escapeHtml(c.nome)}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop';">
+                            <span class="clinic-location-badge">${escapeHtml(c.localizacao_formatada)}</span>
+                        </div>
+                        <div class="clinic-content">
+                            <h2>${escapeHtml(c.nome)}</h2>
+                            <div class="clinic-meta">
+                                <div class="clinic-meta-item">
+                                    <span>📍</span>
+                                    <span>${escapeHtml(c.endereco)}</span>
+                                </div>
+                                <div class="clinic-meta-item">
+                                    <span>📞</span>
+                                    <span><strong>Telefone:</strong> ${escapeHtml(c.telefone)}</span>
+                                </div>
+                                <div class="clinic-meta-item">
+                                    <span>🕒</span>
+                                    <span><strong>Horário:</strong> ${escapeHtml(c.horario_atendimento)}</span>
+                                </div>
+                            </div>
+                            <div class="clinic-actions">
+                                ${linkMapa}
+                                ${linkSite}
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        function limparFiltros() {
+            termoInput.value = '';
+            estadoSelect.value = '';
+            if (regionSublabel) regionSublabel.style.display = 'none';
+            buscarClinicas();
+        }
+
+        btnLimparFiltros.addEventListener('click', limparFiltros);
+
+        // Inicialização padrão: carrega clínicas
+        buscarClinicas();
+    </script>
+</body>
+</html>

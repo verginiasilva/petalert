@@ -1,0 +1,608 @@
+/* PetAlert - Estilos de Meu Perfil e Configurações (Requisito 34) */
+
+.perfil-main {
+    max-width: 1040px;
+    margin: 2rem auto;
+    padding: 0 1.2rem;
+}
+
+.perfil-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Card do Topo do Perfil */
+.perfil-hero-card {
+    background: linear-gradient(135deg, #ffffff, var(--surface-alt));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: var(--shadow);
+    flex-wrap: wrap;
+}
+
+.perfil-avatar-wrapper {
+    flex-shrink: 0;
+}
+
+.perfil-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.3rem;
+    font-weight: 800;
+    box-shadow: 0 10px 22px rgba(217, 125, 82, 0.28);
+    text-transform: uppercase;
+}
+
+.btn-trocar-foto-badge:hover {
+    transform: scale(1.12);
+    box-shadow: 0 6px 14px rgba(234, 88, 12, 0.35);
+}
+
+
+.perfil-hero-info {
+    flex: 1;
+    min-width: 250px;
+}
+
+.perfil-badge-tipo {
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    background: #e0e7ff;
+    color: #3730a3;
+    display: inline-block;
+}
+
+.perfil-badge-tipo.doador {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.perfil-badge-tipo.admin {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.perfil-quick-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+}
+
+.perfil-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.btn-sair-perfil {
+    background: #fff0ea;
+    border: 1px solid #fed7aa;
+    color: var(--primary-dark);
+    padding: 0.65rem 1.1rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-sair-perfil:hover {
+    background: #fed7aa;
+    color: #9a3412;
+}
+
+/* Abas de Navegação */
+.perfil-nav-tabs {
+    display: flex;
+    gap: 0.6rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.4rem;
+    overflow-x: auto;
+}
+
+.perfil-tab {
+    background: transparent;
+    border: none;
+    padding: 0.75rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--muted);
+    border-radius: 12px 12px 0 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.perfil-tab:hover {
+    color: var(--primary-dark);
+    background: var(--surface);
+}
+
+.perfil-tab.active {
+    color: var(--primary-dark);
+    background: var(--surface);
+    border-bottom: 3px solid var(--primary);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.02);
+}
+
+/* Cards de Conteúdo */
+.perfil-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.2rem;
+    box-shadow: var(--shadow);
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.8rem;
+}
+
+.card-header-flex h2 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.45rem;
+    color: var(--text);
+}
+
+/* Grid de Informações Pessoais */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.4rem;
+}
+
+.info-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.info-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.info-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.info-valor {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    word-break: break-word;
+}
+
+/* Campos de Formulário */
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--text);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+    font-size: 0.98rem;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(246, 167, 128, 0.25);
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.form-row-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.form-actions-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.85rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Campo de Senha com Botão Mostrar/Ocultar */
+.password-field-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field-wrapper input {
+    width: 100%;
+    padding-right: 2.8rem;
+}
+
+.btn-toggle-pass {
+    position: absolute;
+    right: 0.6rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0.4rem;
+    color: var(--muted);
+}
+
+/* Feedback Alerta */
+.feedback-alerta {
+    padding: 1rem 1.4rem;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.96rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.feedback-alerta.sucesso {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+}
+
+.feedback-alerta.erro {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+/* Resumo da Conta */
+.config-summary-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.95rem;
+}
+
+/* Lista de Ações */
+.config-actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.config-action-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.config-action-item.danger-item {
+    border-color: #fca5a5;
+    background: #fff8f8;
+}
+
+.config-action-text h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+}
+
+.config-action-text p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.danger-btn {
+    background: #dc2626;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 0.85rem 1.3rem;
+    font-weight: 800;
+    font-size: 0.96rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.danger-btn:hover {
+    background: #b91c1c;
+    box-shadow: 0 8px 18px rgba(220, 38, 38, 0.25);
+}
+
+/* Modais */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+}
+
+.modal-card {
+    background: #ffffff;
+    border-radius: 26px;
+    max-width: 520px;
+    width: 100%;
+    padding: 2.2rem 2rem;
+    box-shadow: 0 24px 48px rgba(90, 67, 58, 0.28);
+    text-align: center;
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.modal-card-danger {
+    border-color: #fca5a5;
+}
+
+.modal-icon-badge {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    font-size: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem auto;
+}
+
+.modal-buttons-grid {
+    display: flex;
+    gap: 0.85rem;
+    margin-top: 1.4rem;
+}
+
+.modal-buttons-grid button {
+    flex: 1;
+}
+
+.exclusao-termos-box {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    font-size: 0.88rem;
+    color: #991b1b;
+    text-align: left;
+    margin-bottom: 1.4rem;
+    line-height: 1.5;
+}
+
+.exclusao-termos-box ul {
+    margin: 0.4rem 0 0 1.2rem;
+    padding: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .perfil-hero-card {
+        padding: 1.4rem;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .perfil-hero-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .perfil-quick-meta {
+        justify-content: center;
+    }
+
+    .card-header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .modal-buttons-grid {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================================
+   PetAlert - Estilos de Verificação de Identidade (Badges e Cards)
+   ========================================================================== */
+
+.badge-identidade {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 99px;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+}
+
+.badge-identidade.verificado {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+}
+
+.badge-identidade.pendente {
+    background: #fef9c3;
+    color: #854d0e;
+    border: 1px solid #fde047;
+}
+
+.badge-identidade.falha {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+.badge-identidade.nao_verificado {
+    background: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+}
+
+/* Card de Status da Identidade */
+.identidade-status-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1.2rem 1.4rem;
+    border-radius: 16px;
+    margin-bottom: 1.6rem;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(72, 44, 32, 0.04);
+}
+
+.identidade-status-card.verificado {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border-color: #86efac;
+    color: #14532d;
+}
+
+.identidade-status-card.pendente {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-color: #fde047;
+    color: #78350f;
+}
+
+.identidade-status-card.falha {
+    background: linear-gradient(135deg, #fff1f2, #fee2e2);
+    border-color: #fca5a5;
+    color: #7f1d1d;
+}
+
+.identidade-status-card.nao_verificado {
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+    border-color: #e5e7eb;
+    color: #374151;
+}
+
+.identidade-status-icone {
+    font-size: 2rem;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.identidade-status-detalhes {
+    flex: 1;
+}
+
+.identidade-status-titulo {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.08rem;
+    font-weight: 800;
+}
+
+.identidade-status-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    opacity: 0.92;
+}
+
+/* Alerta Informativo na Edição de Identidade */
+.alerta-identidade-edicao {
+    background: linear-gradient(135deg, #fff7ed, var(--yellow-soft));
+    border: 1px solid #fed7aa;
+    border-radius: 16px;
+    padding: 1.1rem 1.3rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin-bottom: 1.4rem;
+    box-shadow: 0 4px 12px rgba(217, 125, 82, 0.05);
+}
+
+.alerta-identidade-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.alerta-identidade-edicao strong {
+    color: #9a3412;
+    font-size: 0.96rem;
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.alerta-identidade-edicao p {
+    margin: 0;
+    color: #7c2d12;
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
