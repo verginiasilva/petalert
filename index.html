@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert — Amor e Adoção Responsável de Cães e Gatos</title>
+    <meta name="description" content="O PetAlert conecta animais que precisam de um lar a famílias prontas para amar. Encontre pets para adoção, cadastre animais, fale com o Pet.IA e converse com doadores.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/inicio.css">
+</head>
+<body class="landing-page-body" dir="ltr">
+
+    <!-- CABEÇALHO MODERNO E RESPONSIVO -->
+    <header class="site-header lp-header" id="headerPrincipal">
+        <a class="brand lp-brand" href="#inicio" title="PetAlert — Início">
+            <img src="public/img/PetAlert-Logo.png" alt="Logo PetAlert" class="lp-logo-img">
+            <span class="lp-brand-text">PetAlert</span>
+        </a>
+
+        <!-- Botão Hambúrguer Mobile -->
+        <button class="lp-menu-toggle" id="lpMenuToggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="menuNavegacao">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+        </button>
+
+        <!-- Navegação Principal com Rolagem Suave -->
+        <nav class="site-nav lp-nav" id="menuNavegacao" aria-label="Navegação da página inicial">
+            <a href="#inicio" class="lp-nav-link active">Início</a>
+            <a href="#sobre" class="lp-nav-link">Sobre nós</a>
+            <a href="#como-funciona" class="lp-nav-link">Como funciona</a>
+            <a href="#recursos" class="lp-nav-link">Recursos</a>
+            <a href="#destaque-adocao" class="lp-nav-link">Adoção</a>
+            <div class="lp-nav-divider" aria-hidden="true"></div>
+            <a href="public/login/index.html" class="lp-nav-btn lp-nav-login" id="navLoginLink">Entrar</a>
+            <a href="public/cadastro/index.html" class="lp-nav-btn lp-nav-cadastrar" id="navCadastroLink">Cadastrar-se</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- SEÇÃO HERO PRINCIPAL -->
+        <section class="lp-hero" id="inicio">
+            <div class="lp-hero-container">
+                <div class="lp-hero-content">
+                    <div class="lp-badge">
+                        <span class="lp-badge-icon">🐾</span>
+                        <span class="lp-badge-text">Plataforma Comunitária de Adoção Responsável</span>
+                    </div>
+
+                    <h1 class="lp-hero-title">
+                        Todo pet merece uma família. <br>
+                        <span class="lp-title-highlight">Toda família merece um amor de quatro patas.</span>
+                    </h1>
+
+                    <p class="lp-hero-description">
+                        O PetAlert conecta animais que precisam de um lar a pessoas dispostas a transformar suas vidas por meio da adoção responsável.
+                    </p>
+
+                    <div class="lp-hero-actions">
+                        <a href="public/pets/index.html" class="lp-btn lp-btn-primary" id="btnHeroEncontrarPet">
+                            <svg class="lp-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 2a3 3 0 0 0-3 3c0 .8.3 1.5.8 2.1C8.6 7.6 7.6 8.6 7.1 9.8c-.6-.5-1.3-.8-2.1-.8a3 3 0 0 0 0 6c.8 0 1.5-.3 2.1-.8.5 1.2 1.5 2.2 2.7 2.7-.5.6-.8 1.3-.8 2.1a3 3 0 0 0 6 0c0-.8-.3-1.5-.8-2.1 1.2-.5 2.2-1.5 2.7-2.7.6.5 1.3.8 2.1.8a3 3 0 0 0 0-6c-.8 0-1.5.3-2.1.8-.5-1.2-1.5-2.2-2.7-2.7.5-.6.8-1.3.8-2.1a3 3 0 0 0-3-3z"/>
+                            </svg>
+                            <span>Encontrar meu pet</span>
+                        </a>
+
+                        <a href="public/doarPet/index.html" class="lp-btn lp-btn-secondary" id="btnHeroQueroDoar">
+                            <svg class="lp-btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                            <span>Quero doar</span>
+                        </a>
+                    </div>
+
+                    <!-- Métricas Humanizadas -->
+                    <div class="lp-hero-stats">
+                        <div class="lp-stat-item">
+                            <strong>100%</strong>
+                            <span>Adoção com amor</span>
+                        </div>
+                        <div class="lp-stat-divider"></div>
+                        <div class="lp-stat-item">
+                            <strong>Chat Direto</strong>
+                            <span>Tutor e Adotante</span>
+                        </div>
+                        <div class="lp-stat-divider"></div>
+                        <div class="lp-stat-item">
+                            <strong>Pet.IA</strong>
+                            <span>Apoio 24h na Adoção</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Composição Visual com Imagens Reais de Animais -->
+                <div class="lp-hero-visual">
+                    <div class="lp-visual-card-main">
+                        <img src="public/img/fofuxo.jpg" alt="Cãozinho e gatinho acolhidos no PetAlert" class="lp-visual-img" onerror="this.src='public/img/rex.jpg'">
+                        
+                        <div class="lp-floating-badge lp-floating-top">
+                            <span class="lp-float-emoji">✨</span>
+                            <div>
+                                <span class="lp-float-title">Novo amigo perto de você</span>
+                                <span class="lp-float-sub">Cães e gatos aguardando carinho</span>
+                            </div>
+                        </div>
+
+                        <div class="lp-floating-badge lp-floating-bottom">
+                            <span class="lp-float-emoji">🏠</span>
+                            <div>
+                                <span class="lp-float-title">Adoção Responsável</span>
+                                <span class="lp-float-sub">Famílias verificadas e seguras</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lp-visual-thumbs">
+                        <div class="lp-thumb" title="Pipoca aguardando um lar">
+                            <img src="public/img/pipoca.jpg" alt="Gatinho Pipoca">
+                        </div>
+                        <div class="lp-thumb" title="Luna pronta para adoção">
+                            <img src="public/img/luna.jpg" alt="Cachorrinha Luna">
+                        </div>
+                        <div class="lp-thumb" title="Bolinha brincalhão">
+                            <img src="public/img/bolinha.jpg" alt="Pet Bolinha">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: SOBRE O PETALERT -->
+        <section class="lp-section lp-about" id="sobre">
+            <div class="lp-container">
+                <div class="lp-section-header">
+                    <span class="lp-section-tag">Sobre o PetAlert</span>
+                    <h2 class="lp-section-title">Aproximando quem cuida de quem quer amar</h2>
+                    <p class="lp-section-subtitle">
+                        Nascemos para construir uma ponte confiável, segura e acolhedora entre doadores e adotantes, incentivando a proteção e a adoção consciente de animais.
+                    </p>
+                </div>
+
+                <div class="lp-about-grid">
+                    <div class="lp-about-card lp-about-card-1">
+                        <div class="lp-about-icon-wrapper">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </div>
+                        <h3>Acolhimento Sem Barreiras</h3>
+                        <p>Facilitamos a conexão direta entre pessoas e protetores que acolheram animais em situação de vulnerabilidade com quem sonha em ter um fiel companheiro em casa.</p>
+                    </div>
+
+                    <div class="lp-about-card lp-about-card-2">
+                        <div class="lp-about-icon-wrapper">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 14 14"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Busca Local Inteligente</h3>
+                        <p>Nossos filtros de pesquisa permitem encontrar animais por proximidade geográfica, porte e espécie, tornando o processo de adoção viável, rápido e seguro.</p>
+                    </div>
+
+                    <div class="lp-about-card lp-about-card-3">
+                        <div class="lp-about-icon-wrapper">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <h3>Compromisso Responsável</h3>
+                        <p>Incentivamos a guarda responsável, prevenção de abandono e oferecemos canal formal para denúncias de maus-tratos para que nenhum animal fique desamparado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: COMO FUNCIONA -->
+        <section class="lp-section lp-how" id="como-funciona">
+            <div class="lp-container">
+                <div class="lp-section-header">
+                    <span class="lp-section-tag">Etapas Simples</span>
+                    <h2 class="lp-section-title">Como funciona o processo de adoção</h2>
+                    <p class="lp-section-subtitle">
+                        Em três passos transparentes e cuidadosos, você encontra seu novo melhor amigo e começa uma nova história repleta de amor.
+                    </p>
+                </div>
+
+                <div class="lp-steps-container">
+                    <!-- Passo 1 -->
+                    <div class="lp-step-card">
+                        <div class="lp-step-number">01</div>
+                        <div class="lp-step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <h3 class="lp-step-title">Encontre um animal</h3>
+                        <p class="lp-step-text">
+                            Navegue pela galeria de pets disponíveis para adoção. Use filtros por espécie, porte, idade e cidade para descobrir o bichinho ideal para o seu estilo de vida.
+                        </p>
+                        <a href="public/pets/index.html" class="lp-step-link">Ver catálogo de pets &rarr;</a>
+                    </div>
+
+                    <!-- Passo 2 -->
+                    <div class="lp-step-card">
+                        <div class="lp-step-number">02</div>
+                        <div class="lp-step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="lp-step-title">Conheça sua história e converse com o doador</h3>
+                        <p class="lp-step-text">
+                            Acesse o perfil do animal, conheça o temperamento e utilize nosso chat em tempo real para tirar dúvidas e conversar diretamente com o tutor responsável.
+                        </p>
+                        <a href="public/chatDoador/index.html" class="lp-step-link">Saber sobre o chat &rarr;</a>
+                    </div>
+
+                    <!-- Passo 3 -->
+                    <div class="lp-step-card">
+                        <div class="lp-step-number">03</div>
+                        <div class="lp-step-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                            </svg>
+                        </div>
+                        <h3 class="lp-step-title">Comece uma nova história de amor</h3>
+                        <p class="lp-step-text">
+                            Alinhe os cuidados essenciais, vacinação e ambiente seguro. Com tudo pronto, realize a adoção com afeto, segurança e a certeza de um recomeço feliz!
+                        </p>
+                        <a href="public/cadastro/index.html" class="lp-step-link">Criar conta para adotar &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: RECURSOS DA PLATAFORMA -->
+        <section class="lp-section lp-features" id="recursos">
+            <div class="lp-container">
+                <div class="lp-section-header">
+                    <span class="lp-section-tag">Recursos da Plataforma</span>
+                    <h2 class="lp-section-title">Tudo o que você precisa em um único lugar</h2>
+                    <p class="lp-section-subtitle">
+                        Cada ferramenta foi desenvolvida com carinho e precisão para aproximar pessoas, amparar animais e garantir total segurança.
+                    </p>
+                </div>
+
+                <div class="lp-features-grid">
+                    <!-- Recurso 1: Pesquisa de Pets -->
+                    <article class="lp-feature-card lp-card-pesquisa">
+                        <div class="lp-card-header">
+                            <div class="lp-card-badge">Adoção</div>
+                            <div class="lp-card-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="lp-card-title">Pesquisa de Pets</h3>
+                        <p class="lp-card-desc">
+                            Encontre animais disponíveis para adoção utilizando filtros inteligentes por espécie, porte, idade e cidade mais próxima.
+                        </p>
+                        <div class="lp-card-footer">
+                            <a href="public/pets/index.html" class="lp-card-action">
+                                <span>Explorar Pets</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Recurso 2: Cadastro de Animais -->
+                    <article class="lp-feature-card lp-card-cadastro">
+                        <div class="lp-card-header">
+                            <div class="lp-card-badge">Doação</div>
+                            <div class="lp-card-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 5v14M5 12h14"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="lp-card-title">Cadastro de Animais</h3>
+                        <p class="lp-card-desc">
+                            Permita que doadores e protetores cadastrem animais que precisam de um novo lar com fotos, temperamento e história.
+                        </p>
+                        <div class="lp-card-footer">
+                            <a href="public/doarPet/index.html" class="lp-card-action">
+                                <span>Cadastrar Animal</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Recurso 3: Pet.IA Assistente Inteligente -->
+                    <article class="lp-feature-card lp-card-ia">
+                        <div class="lp-card-header">
+                            <div class="lp-card-badge">Inteligência Artificial</div>
+                            <div class="lp-card-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="lp-card-title">Pet.IA</h3>
+                        <p class="lp-card-desc">
+                            Assistente inteligente integrada que tira dúvidas sobre sintomas, comportamento, adaptação do pet e cuidados diários.
+                        </p>
+                        <div class="lp-card-footer">
+                            <a href="public/petIA/index.html" class="lp-card-action">
+                                <span>Conversar com Pet.IA</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Recurso 4: Chat com Doador -->
+                    <article class="lp-feature-card lp-card-chat">
+                        <div class="lp-card-header">
+                            <div class="lp-card-badge">Comunicação</div>
+                            <div class="lp-card-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="lp-card-title">Chat com Doador</h3>
+                        <p class="lp-card-desc">
+                            Facilite a comunicação direta e segura entre adotantes e tutores para esclarecer dúvidas e agendar encontros.
+                        </p>
+                        <div class="lp-card-footer">
+                            <a href="public/chatDoador/index.html" class="lp-card-action">
+                                <span>Abrir Mensagens</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Recurso 5: Registro de Denúncias -->
+                    <article class="lp-feature-card lp-card-denuncia">
+                        <div class="lp-card-header">
+                            <div class="lp-card-badge">Proteção Animal</div>
+                            <div class="lp-card-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="lp-card-title">Registro de Denúncias</h3>
+                        <p class="lp-card-desc">
+                            Permita registrar com sigilo e rapidez ocorrências de maus-tratos ou animais em situação de perigo iminente.
+                        </p>
+                        <div class="lp-card-footer">
+                            <a href="public/denuncias/index.html" class="lp-card-action">
+                                <span>Fazer Denúncia</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Recurso 6: Doações Solidárias via PIX -->
+                    <article class="lp-feature-card lp-card-doacao">
+                        <div class="lp-card-header">
+                            <div class="lp-card-badge">Solidariedade</div>
+                            <div class="lp-card-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="lp-card-title">Doações Solidárias</h3>
+                        <p class="lp-card-desc">
+                            Contribua financeiramente via PIX com alimentação, vacinas e cuidados emergenciais para animais resgatados.
+                        </p>
+                        <div class="lp-card-footer">
+                            <a href="public/doacoes/index.html" class="lp-card-action">
+                                <span>Apoiar a Causa</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: DESTAQUE — ADOÇÃO RESPONSÁVEL (ANIMAIS REAIS) -->
+        <section class="lp-section lp-showcase" id="destaque-adocao">
+            <div class="lp-container">
+                <div class="lp-section-header">
+                    <span class="lp-section-tag">Adoção com Amor</span>
+                    <h2 class="lp-section-title">Seu próximo melhor amigo pode estar esperando por você.</h2>
+                    <p class="lp-section-subtitle">
+                        Estes são alguns dos animais carinhosos que estão prontos para receber e dar muito amor em uma nova família.
+                    </p>
+                </div>
+
+                <!-- Grid Dinâmico de Pets Reais -->
+                <div class="lp-pets-grid" id="lpPetsDestaqueContainer">
+                    <article class="lp-pet-card">
+                        <div class="lp-pet-img-wrap">
+                            <img src="public/img/pipoca.jpg" alt="Foto de Pipoca" class="lp-pet-img" loading="lazy">
+                            <span class="lp-pet-badge">Gato • Jovem</span>
+                        </div>
+                        <div class="lp-pet-body">
+                            <h3 class="lp-pet-name">Pipoca</h3>
+                            <p class="lp-pet-info">Gato carinhoso, vacinado e muito brincalhão. Adora ronronar no colo.</p>
+                            <div class="lp-pet-meta">
+                                <span>📍 Belo Horizonte, MG</span>
+                            </div>
+                            <a href="public/pets/index.html" class="lp-btn lp-btn-sm lp-btn-outline">Conhecer Pipoca</a>
+                        </div>
+                    </article>
+
+                    <article class="lp-pet-card">
+                        <div class="lp-pet-img-wrap">
+                            <img src="public/img/luna.jpg" alt="Foto de Luna" class="lp-pet-img" loading="lazy">
+                            <span class="lp-pet-badge">Cadela • Adulta</span>
+                        </div>
+                        <div class="lp-pet-body">
+                            <h3 class="lp-pet-name">Luna</h3>
+                            <p class="lp-pet-info">Dócil, castrada e muito leal. Se dá super bem com crianças e outros pets.</p>
+                            <div class="lp-pet-meta">
+                                <span>📍 Contagem, MG</span>
+                            </div>
+                            <a href="public/pets/index.html" class="lp-btn lp-btn-sm lp-btn-outline">Conhecer Luna</a>
+                        </div>
+                    </article>
+
+                    <article class="lp-pet-card">
+                        <div class="lp-pet-img-wrap">
+                            <img src="public/img/bolinha.jpg" alt="Foto de Bolinha" class="lp-pet-img" loading="lazy">
+                            <span class="lp-pet-badge">Cão • Filhote</span>
+                        </div>
+                        <div class="lp-pet-body">
+                            <h3 class="lp-pet-name">Bolinha</h3>
+                            <p class="lp-pet-info">Energético e amoroso, pronto para alegrar a rotina de quem adotar.</p>
+                            <div class="lp-pet-meta">
+                                <span>📍 Betim, MG</span>
+                            </div>
+                            <a href="public/pets/index.html" class="lp-btn lp-btn-sm lp-btn-outline">Conhecer Bolinha</a>
+                        </div>
+                    </article>
+
+                    <article class="lp-pet-card">
+                        <div class="lp-pet-img-wrap">
+                            <img src="public/img/rex.jpg" alt="Foto de Rex" class="lp-pet-img" loading="lazy">
+                            <span class="lp-pet-badge">Cão • Porte Médio</span>
+                        </div>
+                        <div class="lp-pet-body">
+                            <h3 class="lp-pet-name">Rex</h3>
+                            <p class="lp-pet-info">Excelente companheiro para caminhadas, sociável e muito protetor com a família.</p>
+                            <div class="lp-pet-meta">
+                                <span>📍 São Paulo, SP</span>
+                            </div>
+                            <a href="public/pets/index.html" class="lp-btn lp-btn-sm lp-btn-outline">Conhecer Rex</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="lp-showcase-action">
+                    <a href="public/pets/index.html" class="lp-btn lp-btn-primary lp-btn-lg">
+                        <span>Conhecer os animais</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO FINAL: CTA INVITACIONAL -->
+        <section class="lp-cta-final">
+            <div class="lp-container">
+                <div class="lp-cta-box">
+                    <div class="lp-cta-decor" aria-hidden="true">🐾</div>
+                    <h2 class="lp-cta-title">Uma nova história de amor pode começar aqui.</h2>
+                    <p class="lp-cta-text">
+                        Seja adotando um animalzinho ou ajudando a divulgar quem precisa de socorro, a sua participação transforma vidas. Junte-se à nossa comunidade hoje mesmo.
+                    </p>
+                    <div class="lp-cta-buttons">
+                        <a href="public/pets/index.html" class="lp-btn lp-btn-primary lp-btn-lg">Quero adotar</a>
+                        <a href="public/doacoes/index.html" class="lp-btn lp-btn-secondary lp-btn-lg">Quero ajudar</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ COMPLETO E INSTITUCIONAL -->
+    <footer class="lp-footer">
+        <div class="lp-container">
+            <div class="lp-footer-grid">
+                <!-- Coluna 1: Sobre -->
+                <div class="lp-footer-col lp-footer-about">
+                    <a class="brand lp-brand" href="#inicio">
+                        <img src="public/img/PetAlert-Logo.png" alt="Logo PetAlert" class="lp-footer-logo">
+                        <span class="lp-brand-text">PetAlert</span>
+                    </a>
+                    <p class="lp-footer-desc">
+                        Plataforma dedicada a aproximar doadores e adotantes, incentivar a adoção consciente, registrar denúncias de proteção e oferecer suporte contínuo para o bem-estar animal.
+                    </p>
+                    <div class="lp-footer-social">
+                        <span class="lp-social-tag">🐾 Amor e proteção aos animais</span>
+                    </div>
+                </div>
+
+                <!-- Coluna 2: Navegação -->
+                <div class="lp-footer-col">
+                    <h4 class="lp-footer-heading">Navegação</h4>
+                    <ul class="lp-footer-links">
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#sobre">Sobre o PetAlert</a></li>
+                        <li><a href="#como-funciona">Como funciona</a></li>
+                        <li><a href="#recursos">Recursos da plataforma</a></li>
+                        <li><a href="#destaque-adocao">Pets para adoção</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 3: Funcionalidades -->
+                <div class="lp-footer-col">
+                    <h4 class="lp-footer-heading">Funcionalidades</h4>
+                    <ul class="lp-footer-links">
+                        <li><a href="public/pets/index.html">Pesquisa de Pets</a></li>
+                        <li><a href="public/doarPet/index.html">Cadastrar Animal</a></li>
+                        <li><a href="public/petIA/index.html">Pet.IA Assistente</a></li>
+                        <li><a href="public/chatDoador/index.html">Chat com Doador</a></li>
+                        <li><a href="public/denuncias/index.html">Registro de Denúncias</a></li>
+                        <li><a href="public/doacoes/index.html">Apoio via PIX</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 4: Institucional & Contato -->
+                <div class="lp-footer-col">
+                    <h4 class="lp-footer-heading">Institucional & Suporte</h4>
+                    <ul class="lp-footer-links">
+                        <li><a href="public/politica-privacidade/index.html">Política de Privacidade (LGPD)</a></li>
+                        <li><a href="public/veterinarios/index.html">Rede de Veterinários</a></li>
+                        <li><a href="public/login/index.html">Área do Usuário</a></li>
+                        <li><a href="public/cadastro/index.html">Criar Nova Conta</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lp-footer-bottom">
+                <p>© 2026 PetAlert — Plataforma de Proteção & Adoção de Animais. Todos os direitos reservados.</p>
+                <p class="lp-footer-sub">Feito com cuidado e respeito à vida animal.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts da Plataforma -->
+    <script src="js/auth-ui.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

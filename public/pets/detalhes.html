@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Conheça o Pet</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* ==========================================================================
+           ESTILOS DA PÁGINA DE DETALHES, GALERIA E BIOGRAFIA DO PET
+           ========================================================================== */
+
+        .pet-details-shell {
+            max-width: 1040px;
+            margin: 1.5rem auto 3rem;
+            padding: 0 1.25rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pet-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.92rem;
+            color: var(--muted);
+        }
+
+        .pet-breadcrumb a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .pet-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .pet-main-card {
+            background: #ffffff;
+            border: 1px solid #f6ded5;
+            border-radius: 26px;
+            box-shadow: 0 16px 44px rgba(235, 94, 85, 0.08), 0 3px 12px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            padding: 2.2rem;
+        }
+
+        /* 1. Galeria de Fotos em Destaque */
+        .pet-gallery-section {
+            margin-bottom: 2.2rem;
+        }
+
+        .pet-gallery-stage {
+            position: relative;
+            width: 100%;
+            height: 520px;
+            border-radius: 22px;
+            overflow: hidden;
+            background: #1e1917;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .pet-gallery-main-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.3s ease, opacity 0.25s ease;
+            cursor: pointer;
+        }
+
+        .pet-gallery-main-img:hover {
+            transform: scale(1.015);
+        }
+
+        /* Botão de Ampliação / Zoom */
+        .btn-gallery-zoom {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(255, 255, 255, 0.92);
+            color: #2D2522;
+            border: none;
+            border-radius: 12px;
+            padding: 0.55rem 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            z-index: 3;
+        }
+
+        .btn-gallery-zoom:hover {
+            background: #ffffff;
+            transform: scale(1.05);
+            color: #FF6B6B;
+        }
+
+        /* Badge Contador de Fotos */
+        .gallery-counter-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(45, 37, 34, 0.78);
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+            z-index: 3;
+        }
+
+        /* Setas de Navegação */
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2D2522;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+            transition: all 0.2s ease;
+            z-index: 3;
+            user-select: none;
+        }
+
+        .gallery-nav-btn:hover {
+            background: #ffffff;
+            transform: translateY(-50%) scale(1.1);
+            color: #FF6B6B;
+        }
+
+        .gallery-nav-btn.prev {
+            left: 14px;
+        }
+
+        .gallery-nav-btn.next {
+            right: 14px;
+        }
+
+        /* Faixa de Miniaturas (Thumbnails) */
+        .pet-gallery-thumbs {
+            display: flex;
+            gap: 0.85rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+            padding: 0.35rem 0.2rem;
+            scrollbar-width: thin;
+        }
+
+        .pet-gallery-thumb-item {
+            width: 90px;
+            height: 90px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 3px solid transparent;
+            cursor: pointer;
+            flex-shrink: 0;
+            background: #1e1917;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .pet-gallery-thumb-item:hover {
+            transform: translateY(-2px);
+            border-color: #ffd0b5;
+        }
+
+        .pet-gallery-thumb-item.active {
+            border-color: #FF6B6B;
+            box-shadow: 0 4px 14px rgba(255, 107, 107, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .pet-gallery-thumb-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 2. Nome do Animal e Informações Principais */
+        .pet-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-bottom: 1.6rem;
+            border-bottom: 1px solid #f6ded5;
+            margin-bottom: 1.8rem;
+        }
+
+        .pet-title-block h1 {
+            margin: 0 0 0.4rem 0;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #2D2522;
+            letter-spacing: -0.5px;
+        }
+
+        .pet-badges-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 0.6rem;
+        }
+
+        .badge-info {
+            background: #fff0e8;
+            color: #c2410c;
+            border: 1px solid #ffd0b5;
+            padding: 5px 13px;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge-status-disponivel {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #86efac;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 800;
+        }
+
+        .badge-status-doado {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 800;
+        }
+
+        /* 3. Seção "Conheça o Pet" (Biografia e História) */
+        .pet-section-block {
+            margin-bottom: 2rem;
+        }
+
+        .pet-section-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #2D2522;
+            margin: 0 0 0.9rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pet-section-title span.icon {
+            font-size: 1.4rem;
+        }
+
+        .pet-bio-card {
+            background: linear-gradient(135deg, #fffcfb 0%, #fff7f2 100%);
+            border: 1.5px solid #f6ded5;
+            border-left: 6px solid #FF6B6B;
+            border-radius: 18px;
+            padding: 1.5rem 1.8rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+        }
+
+        .pet-bio-text {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: #3d302c;
+            margin: 0;
+            white-space: pre-line;
+            word-break: break-word;
+        }
+
+        /* 4. Características e Informações Adicionais */
+        .pet-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+
+        .pet-feature-item {
+            background: #ffffff;
+            border: 1.5px solid #f4ded5;
+            border-radius: 16px;
+            padding: 1.1rem 1.3rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s ease;
+        }
+
+        .pet-feature-item:hover {
+            transform: translateY(-2px);
+            border-color: #ffd0b5;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        .pet-feature-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #8c7873;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pet-feature-value {
+            font-size: 1.08rem;
+            font-weight: 800;
+            color: #2D2522;
+        }
+
+        .pet-personality-card {
+            background: linear-gradient(135deg, #fef9ea 0%, #fff7ed 100%);
+            border: 1.5px solid #fed7aa;
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .pet-personality-card strong {
+            color: #9a3412;
+            font-size: 0.92rem;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .pet-personality-card p {
+            margin: 0;
+            font-size: 1rem;
+            color: #4a3d39;
+            line-height: 1.55;
+            font-weight: 600;
+        }
+
+        /* 5. Motivo da Doação */
+        .pet-donation-reason-card {
+            background: #fff8f5;
+            border: 1.5px solid #ffd8c7;
+            border-radius: 16px;
+            padding: 1.3rem 1.6rem;
+            color: #553b34;
+        }
+
+        .pet-donation-reason-card p {
+            margin: 0;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+
+        /* 6. Informações do Doador */
+        .pet-donor-card {
+            background: #ffffff;
+            border: 1.5px solid #f6ded5;
+            border-radius: 20px;
+            padding: 1.4rem 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+        }
+
+        .pet-donor-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .donor-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF8E53, #FF6B6B);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.25);
+            flex-shrink: 0;
+        }
+
+        .donor-info h3 {
+            margin: 0 0 0.2rem 0;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #2D2522;
+        }
+
+        .donor-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #7A6E6B;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .donor-badge {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 800;
+            margin-left: 6px;
+        }
+
+        /* 7. Botão de Ação Principal */
+        .pet-actions-area {
+            margin-top: 2.4rem;
+            padding-top: 1.8rem;
+            border-top: 1.5px solid #f6ded5;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-adotar-destaque {
+            flex: 1 1 320px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1.1rem 2.2rem;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.12rem;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.35);
+            transition: all 0.25s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-adotar-destaque:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.45);
+            filter: brightness(1.04);
+        }
+
+        .btn-voltar-pets {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.1rem 1.8rem;
+            background: #ffffff;
+            color: #2D2522;
+            border: 1.5px solid #eedcd5;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-voltar-pets:hover {
+            background: #fff7f2;
+            border-color: #FF6B6B;
+            color: #FF6B6B;
+        }
+
+        /* Lightbox / Modal de Foto Ampliada em Tela Cheia */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 14, 13, 0.92);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 88vh;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            object-fit: contain;
+        }
+
+        .lightbox-close-btn {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 2.2rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: transform 0.2s ease;
+        }
+
+        .lightbox-close-btn:hover {
+            transform: scale(1.2);
+            color: #FF6B6B;
+        }
+
+        /* ==========================================================================
+           RESPONSIVIDADE (MOBILE & TABLET)
+           ========================================================================== */
+
+        @media (max-width: 768px) {
+            .pet-details-shell {
+                margin: 0.75rem auto 2rem;
+                padding: 0 0.85rem;
+            }
+
+            .pet-main-card {
+                padding: 1.35rem 1.15rem;
+                border-radius: 20px;
+            }
+
+            .pet-gallery-stage {
+                height: 340px;
+                border-radius: 16px;
+            }
+
+            .pet-gallery-thumb-item {
+                width: 70px;
+                height: 70px;
+                border-radius: 10px;
+            }
+
+            .pet-title-block h1 {
+                font-size: 1.7rem;
+            }
+
+            .pet-features-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+
+            .pet-feature-item {
+                padding: 0.9rem 1rem;
+            }
+
+            .pet-donor-card {
+                padding: 1.1rem 1.2rem;
+            }
+
+            .pet-actions-area {
+                flex-direction: column;
+            }
+
+            .btn-adotar-destaque {
+                width: 100%;
+                padding: 1rem 1.4rem;
+                font-size: 1.05rem;
+            }
+
+            .btn-voltar-pets {
+                width: 100%;
+                padding: 0.9rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body dir="ltr">
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html" class="active">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+            <a href="../login/index.html" class="nav-entrar-btn" id="navLoginLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="pet-details-shell">
+            <!-- Breadcrumb de Navegação -->
+            <div class="pet-breadcrumb">
+                <a href="../pets/index.html">← Ver todos os pets</a>
+                <span>/</span>
+                <span id="breadcrumbNomePet">Carregando detalhes do pet...</span>
+            </div>
+
+            <!-- Card Principal com a Sequência Exata Solicitada -->
+            <article class="pet-main-card" id="petDetalhesContainer">
+                <div style="text-align: center; padding: 3rem 1rem;">
+                    <p style="font-size: 1.1rem; color: var(--muted);">Carregando informações completas do animalzinho...</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- Lightbox para Ampliar Foto em Tela Cheia -->
+        <div class="lightbox-overlay" id="lightboxModal">
+            <div class="lightbox-content">
+                <button type="button" class="lightbox-close-btn" id="btnFecharLightbox" title="Fechar visualização">✕</button>
+                <img src="" alt="Foto ampliada do pet" class="lightbox-img" id="lightboxImg">
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+
+    <script src="../auth-ui.js"></script>
+    <script src="detalhes.js"></script>
+</body>
+
+</html>

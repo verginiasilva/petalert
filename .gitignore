@@ -1,0 +1,14 @@
+# Arquivos de ambiente locais e credenciais sensíveis
+.env
+
+# Backups e pacotes compactados
+*.zip
+*.tar
+*.gz
+*.rar
+_backup*/
+
+# Logs e arquivos de sistema
+*.log
+Thumbs.db
+.DS_Store

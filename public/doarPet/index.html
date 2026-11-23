@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetAlert | Doar Pet</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .pet-photos-upload-section {
+            background: #fffcfb;
+            border: 1.5px dashed #f6ded5;
+            border-radius: 20px;
+            padding: 1.35rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-contador-fotos {
+            background: #fff0e8;
+            color: #c2410c;
+            border: 1px solid #ffd0b5;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+
+        .pet-upload-dropzone {
+            border: 2px dashed #f0d5ca;
+            border-radius: 16px;
+            padding: 1.8rem 1.2rem;
+            text-align: center;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pet-upload-dropzone:hover {
+            border-color: #FF6B6B;
+            background: #fffbf9;
+            transform: translateY(-1px);
+        }
+
+        .dropzone-icon {
+            font-size: 2.4rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .dropzone-text strong {
+            display: block;
+            font-size: 1rem;
+            color: #2D2522;
+            margin-bottom: 0.25rem;
+        }
+
+        .dropzone-text span {
+            display: block;
+            font-size: 0.84rem;
+            color: var(--muted);
+            margin-bottom: 0.85rem;
+        }
+
+        .pet-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1rem;
+        }
+
+        .pet-preview-item {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            border: 2.5px solid #fae5dc;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            background: #faf8f7;
+            transition: all 0.2s ease;
+        }
+
+        .pet-preview-item.principal {
+            border-color: #FF6B6B;
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.28);
+        }
+
+        .pet-preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .pet-preview-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(45, 37, 34, 0.82);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-align: center;
+            padding: 4px 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .pet-preview-badge.capa {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+        }
+
+        .btn-remover-foto-previa {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 28px;
+            height: 28px;
+            background: rgba(220, 38, 38, 0.92);
+            color: #ffffff;
+            border: 1.5px solid #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.15s ease, background 0.15s ease;
+            z-index: 2;
+        }
+
+        .btn-remover-foto-previa:hover {
+            transform: scale(1.18);
+            background: #b91c1c;
+        }
+    </style>
+</head>
+
+<body dir="ltr">
+    <header class="site-header">
+        <a class="brand" href="../inicio/index.html">
+            <img src="../img/PetAlert-Logo.png" alt="Logo PetAlert">
+            <span>PetAlert</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Menu principal">
+            <a href="../inicio/index.html">Início</a>
+            <a href="../pets/index.html">Pets</a>
+            <a href="../cadastro/index.html">Cadastro</a>
+            <a href="../denuncias/index.html">Denúncias</a>
+            <a href="../doacoes/index.html">Doações</a>
+            <a href="../petIA/index.html">Pet.IA</a>
+            <a href="../doarPet/index.html" class="active">Doar pet</a>
+            <a href="../veterinarios/index.html">Veterinário</a>
+            <a href="../login/index.html" class="nav-entrar-btn" id="navLoginLink">Entrar</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-shell">
+            <h1>Cadastrar Pet para Adoção / Doação</h1>
+            <p style="color: var(--muted); margin-bottom: 1.5rem;">Preencha todos os campos obrigatórios e adicione até 5 fotos para encontrar uma família amorosa para o animalzinho.</p>
+
+            <form id="formPet" enctype="multipart/form-data">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nomePet">Nome do Pet *</label>
+                        <input type="text" id="nomePet" placeholder="Ex.: Thor, Luna, Pipoca" required>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="especie">Espécie *</label>
+                            <select id="especie" required>
+                                <option value="">Selecione a espécie...</option>
+                                <option value="Cachorro">Cachorro</option>
+                                <option value="Gato">Gato</option>
+                                <option value="Coelho">Coelho</option>
+                                <option value="Pássaro">Pássaro</option>
+                                <option value="Hamster">Hamster</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="grupoEspecieOutra" style="display: none;">
+                            <label for="especieOutra">Especifique a Espécie *</label>
+                            <input type="text" id="especieOutra" placeholder="Ex.: Tartaruga, Furão, Cavalo...">
+                        </div>
+                        <div class="form-group">
+                            <label for="raca">Raça *</label>
+                            <input type="text" id="raca" placeholder="Ex.: SRD (Vira-lata), Siamês, Labrador..." required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label for="sexo">Sexo *</label>
+                            <select id="sexo" required>
+                                <option value="Macho">Macho</option>
+                                <option value="Fêmea">Fêmea</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="idade">Idade em Anos (ou meses) *</label>
+                            <input type="number" id="idade" min="0" max="40" step="0.5" placeholder="Ex.: 2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="porte">Porte *</label>
+                            <select id="porte" required>
+                                <option value="">Selecione...</option>
+                                <option value="Pequeno">Pequeno</option>
+                                <option value="Médio">Médio</option>
+                                <option value="Grande">Grande</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="peso">Peso Aproximado (em kg) *</label>
+                            <input type="number" id="peso" min="0.1" max="150" step="0.1" placeholder="Ex.: 6.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cor">Cor do Pet *</label>
+                            <input type="text" id="cor" placeholder="Ex.: Preto e Branco, Caramelo, Rajado..." required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personalidade">Personalidade e Comportamento *</label>
+                        <input type="text" id="personalidade" placeholder="Ex.: Dócil, muito brincalhão, calmo, sociável com outros animais e crianças..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivo_doacao">Motivo da Doação *</label>
+                        <textarea id="motivo_doacao" rows="3" placeholder="Explique obrigatoriamente o motivo da doação (ex.: resgatado da rua, mudança para local menor, filhote de ninhada...)" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descricao">Biografia e História do Pet *</label>
+                        <textarea id="descricao" rows="4" placeholder="Conte a história do animal, rotina, histórico de vacinas e vermifugação, hábitos e cuidados especiais..." required></textarea>
+                    </div>
+
+                    <!-- Galeria de Fotos do Pet (Até 5 Fotos) -->
+                    <div class="form-group pet-photos-upload-section">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.5rem;">
+                            <label style="font-weight:700; margin:0; font-size:1.02rem; color:var(--text);">📸 Fotos do Pet (até 5 fotos) *</label>
+                            <span id="contadorFotos" class="badge-contador-fotos">0 de 5 fotos adicionadas</span>
+                        </div>
+                        <p style="font-size:0.88rem; color:var(--muted); margin:0 0 0.9rem 0;">
+                            A primeira foto será a foto principal de destaque. Adicione até 5 fotos de ângulos diferentes para que os adotantes conheçam melhor o pet!
+                        </p>
+
+                        <!-- Área de Drop/Clique -->
+                        <div class="pet-upload-dropzone" id="dropzoneFotos">
+                            <input type="file" id="inputMultiFotos" accept="image/jpeg,image/png,image/webp,image/gif" multiple style="display:none;">
+                            <div class="dropzone-content">
+                                <span class="dropzone-icon">📷</span>
+                                <div class="dropzone-text">
+                                    <strong>Clique aqui para escolher as fotos do pet</strong>
+                                    <span>Você pode selecionar até 5 fotos juntas ou adicionar uma por uma</span>
+                                </div>
+                                <button type="button" class="secondary-btn" id="btnEscolherFotos" style="pointer-events:none;">
+                                    + Adicionar fotos
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Alerta Informativo de Limite -->
+                        <div id="alertaLimiteFotos" style="display:none; background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; padding:0.7rem 1.1rem; border-radius:12px; font-size:0.88rem; font-weight:700; margin-top:0.85rem;">
+                            ⚠️ Limite máximo de 5 fotos atingido. Para trocar uma foto, remova uma das fotos abaixo clicando no "X".
+                        </div>
+
+                        <!-- Grid de Pré-visualização com Botão Remover Individual -->
+                        <div class="pet-preview-grid" id="gridPreviaFotos" style="display:none; margin-top:1.1rem;"></div>
+                    </div>
+
+                    <button type="button" class="primary-btn" id="publicar" style="font-size:1.05rem; padding:1rem 1.8rem;">
+                        🐾 Publicar Pet para Adoção
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Modal Informativo: Autenticação Necessária para Doar Pet -->
+        <div id="modalAuthDoarPet" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:1rem; backdrop-filter:blur(4px);">
+            <div class="modal-content" style="background:#fff; border-radius:26px; max-width:480px; width:100%; padding:2.4rem 2rem; box-shadow:0 24px 48px rgba(90,67,58,0.25); text-align:center; border:1px solid var(--border);">
+                <div style="width:70px; height:70px; border-radius:50%; background:#fff0ea; color:var(--primary); font-size:2.3rem; display:flex; align-items:center; justify-content:center; margin:0 auto 1.3rem auto; border:2px solid #fed7aa; box-shadow:0 8px 16px rgba(244,124,32,0.15);">
+                    🐾
+                </div>
+                <h2 style="font-size:1.5rem; font-weight:800; color:var(--text); margin-bottom:0.75rem;">Cadastro de Pet para Doação</h2>
+                <p id="msgAuthDoarPet" style="font-size:1.08rem; font-weight:700; color:var(--text); margin-bottom:0.6rem; line-height:1.45;">
+                    Para doar um pet, você precisa criar uma conta ou entrar no PetAlert.
+                </p>
+                <p style="font-size:0.92rem; color:var(--muted); margin-bottom:1.8rem; line-height:1.5;">
+                    Seus dados preenchidos serão preservados automaticamente para você continuar de onde parou após entrar na sua conta.
+                </p>
+                <div style="display:flex; flex-direction:column; gap:0.85rem;">
+                    <button type="button" id="btnDoarCriarConta" class="secondary-btn" style="width:100%; font-size:1rem; padding:0.9rem; font-weight:800; cursor:pointer;">
+                        Criar conta
+                    </button>
+                    <button type="button" id="btnDoarEntrar" class="primary-btn" style="width:100%; font-size:1rem; padding:0.9rem; font-weight:800; cursor:pointer;">
+                        Entrar
+                    </button>
+                    <a href="../pets/index.html" style="color:var(--muted); text-decoration:none; padding:0.5rem; font-weight:600; font-size:0.92rem; display:inline-block;">
+                        ← Voltar para a lista de pets
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 PetAlert - Plataforma de Proteção & Adoção de Animais.</p>
+    </footer>
+    <script src="../auth-ui.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
